@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -34,6 +34,7 @@ dependencies:
   change_app_package_name: ^1.1.0
   json_annotation: ^4.6.0
   http: any
+  pytorch_mobile: ^0.2.2
 #  alice: ^0.2.5
 
 dev_dependencies:
@@ -42,6 +43,7 @@ dev_dependencies:
   flutter_launcher_icons: "^0.9.3"
   build_runner: ^2.2.0
   json_serializable: ^6.3.1
+  path_provider: ^2.0.2
 
 flutter_icons:
   ios: true
@@ -63,6 +65,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/models/model.pth
+    - assets/models/model_saved.ptl
+    - assets/labels.csv
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

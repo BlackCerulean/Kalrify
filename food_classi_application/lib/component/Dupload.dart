@@ -1,14 +1,12 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:food_classi_application/homescreen.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 import 'package:http/http.dart' as http;
-import 'dart:typed_data';
-
 import 'package:path/path.dart';
 import 'package:async/async.dart';
+import 'package:pytorch_mobile/pytorch_mobile.dart';
 
 String txt = "";
 String txt1 = "Upload or take an image of Thai Food";
@@ -19,8 +17,8 @@ class Dupload extends StatefulWidget {
 }
 
 class _DuploadState extends State<Dupload> {
-  Map<String, dynamic> _outputs;
-  XFile _image;
+  Map<String, dynamic>? _outputs;
+  XFile? _image;
   bool _loading = false;
 
   @override
@@ -62,7 +60,7 @@ class _DuploadState extends State<Dupload> {
                         fontSize: 32.0,
                       ),
                     )
-                  : new Image.file(File(_image.path),
+                  : new Image.file(File(_image!.path),
                       height: MediaQuery.of(context).size.height * 0.6,
                       width: MediaQuery.of(context).size.width * 0.8),
               new Text(
@@ -215,14 +213,14 @@ class _DuploadState extends State<Dupload> {
     setState(() {});
     debugPrint("Image Picker Activated");
     if (a == 0) {
-      _image = await _picker.pickImage(source: ImageSource.camera);
+      _image = (await _picker.pickImage(source: ImageSource.camera))!;
     } else {
-      _image = await _picker.pickImage(source: ImageSource.gallery);
+      _image = (await _picker.pickImage(source: ImageSource.gallery))!;
     }
 
     txt = "Analysing...";
     debugPrint(_image.toString());
-    upload(File(_image.path));
+    upload(File(_image!.path));
     setState(() {});
   }
 

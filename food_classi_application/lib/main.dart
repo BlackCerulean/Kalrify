@@ -145,6 +145,7 @@ class MyAlert extends StatelessWidget {
             RaisedButton(
           color: Colors.redAccent,
           padding: EdgeInsets.all(8.0),
+          onPressed: () {},
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

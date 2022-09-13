@@ -282,8 +282,13 @@ class _DsearchState extends State<Dsearch> {
 
 class DishList {
   String name, img;
-  double calories, fat, carbo, protein;
+  double? calories, fat, carbo, protein;
 
   DishList(
-      {this.name, this.img, this.calories, this.carbo, this.fat, this.protein});
+      {required this.name,
+      required this.img,
+      this.calories,
+      this.carbo,
+      this.fat,
+      this.protein});
 }
