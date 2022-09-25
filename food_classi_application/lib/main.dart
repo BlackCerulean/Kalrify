@@ -11,7 +11,7 @@ import 'dart:convert';
 
 void main() => runApp(MaterialApp(
     // home: HomeScreen(),
-    home: Dupload()));
+    home: HomeScreen()));
 
 // class MyApp extends StatefulWidget {
 //   @override

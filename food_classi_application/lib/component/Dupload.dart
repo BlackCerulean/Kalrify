@@ -1,3 +1,6 @@
+// All about uploading an image and call our AI APIs from Render services
+
+// Import goes here!!!
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -6,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
-import 'package:pytorch_mobile/pytorch_mobile.dart';
+// import 'package:pytorch_mobile/pytorch_mobile.dart';
 
 String txt = "";
 String txt1 = "Upload or take an image of Thai Food";
@@ -74,85 +77,6 @@ class _DuploadState extends State<Dupload> {
           ),
         ),
       ),
-      // body: _loading
-      //     ? Column(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           // Container(
-      //           //   alignment: Alignment.center,
-      //           //   child: CircularProgressIndicator(
-      //           //     backgroundColor: Colors.red,
-      //           //   ),
-      //           // ),
-      //
-      //           Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             children: [
-      //               Container(
-      //                 width: MediaQuery.of(context).size.width * 0.5,
-      //                 height: MediaQuery.of(context).size.height * 0.2,
-      //                 child: FloatingActionButton(
-      //                   onPressed: pickImage,
-      //                   backgroundColor: Color(0xFF8cb369),
-      //                   child: Icon(
-      //                     Icons.fastfood_rounded,
-      //                     size: MediaQuery.of(context).size.width * 0.25,
-      //                   ),
-      //                 ),
-      //
-      //
-      //               ),
-      //             ],
-      //           ),
-      //         ],
-      //
-      //       )
-      //     : Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.center,
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             Container(
-      //               height: 300.0,
-      //               width: 300.0,
-      //               decoration: new BoxDecoration(
-      //                 shape: BoxShape.circle,
-      //               ),
-      //               child: ClipRRect(
-      //                 borderRadius: BorderRadius.circular(75.0),
-      //                 child: (_image != null)
-      //                     ? new Image.file(
-      //                         _image,
-      //                         fit: BoxFit.cover,
-      //                       )
-      //                     : Container(),
-      //               ),
-      //             ),
-      //             SizedBox(
-      //               height: 20,
-      //             ),
-      //             _outputs != null
-      //                 ? Column(
-      //                     children: [
-      //                       Text("${_outputs["objects"][0]["result"]}",
-      //                           style: TextStyle(
-      //                             color: Colors.black,
-      //                             fontSize: 30,
-      //                           )),
-      //                       Text(
-      //                         "Confidence = ${_outputs["objects"][0]["score"]}",
-      //                         style: TextStyle(
-      //                           fontSize: 20,
-      //                           color: Colors.red,
-      //                         ),
-      //                       )
-      //                     ],
-      //                   )
-      //                 : Container(),
-      //           ],
-      //         ),
-      //       ),
       floatingActionButton: new Stack(
         children: <Widget>[
           Align(
@@ -190,7 +114,6 @@ class _DuploadState extends State<Dupload> {
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
-    //contentType: new MediaType('image', 'png'));
 
     request.files.add(multipartFile);
     var response = await request.send();
@@ -223,67 +146,4 @@ class _DuploadState extends State<Dupload> {
     upload(File(_image!.path));
     setState(() {});
   }
-
-  // Call api to use ML model from AI For Thai
-  // pickImage() async {
-  //   // ignore: deprecated_member_use
-  //   var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-  //   if (image == null) return null;
-  //   setState(() {
-  //     _loading = true;
-  //     _image = image;
-  //   });
-  //   // File imagefile = File(image);
-  //   Uint8List imageBytes = image.readAsBytesSync();
-  //   // print(imageBytes);
-  //   String base64String = base64.encode(imageBytes);
-  //
-  //   var body = json.encode({"file": base64String});
-  //
-  //   var response = await http.post(
-  //     'https://api.aiforthai.in.th/thaifood',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       "Apikey": "zKeCFpHoMX02P8HyaTjbXxsM61TS4woM"
-  //     },
-  //     body: body,
-  //   );
-  //   print(response.body);
-  //   setState(() {
-  //     _loading = false;
-  //     _outputs = json.decode(response.body);
-  //     print(_outputs);
-  //     print(response.statusCode);
-  //   });
-  //   // classifyImage(image);
-  // }
-
-//   classifyImage(File image) async {
-//     var output = await Tflite.runModelOnImage(
-//       path: image.path,
-//       numResults: 6,
-//       threshold: 0.40,
-//       imageMean: 127.5,
-//       imageStd: 127.5,
-//     );
-//     setState(() {
-//       _loading = false;
-//       _outputs = output;
-//       double dogruluk = _outputs[0]["confidence"];
-//       print("${_outputs[0]["confidence"]}");
-//     });
-//   }
-
-//   loadModel() async {
-//     await Tflite.loadModel(
-//       model: "assets/model_unquant.tflite",
-//       labels: "assets/labels.txt",
-//     );
-//   }
-
-//   @override
-//   void dispose() {
-//     Tflite.close();
-//     super.dispose();
-//   }
 }
