@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
+import 'package:food_classi_application/homescreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -106,7 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(30.0),
         ),
       ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+        },
         child: Text(
           'LOGIN',
           style: TextStyle(

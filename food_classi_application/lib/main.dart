@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:food_classi_application/component/Dupload.dart';
 import 'package:food_classi_application/homescreen.dart';
+import 'package:food_classi_application/component/Login.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,7 @@ import 'dart:convert';
 
 void main() => runApp(MaterialApp(
     // home: HomeScreen(),
-    home: HomeScreen()));
+    home: LoginScreen()));
 
 // class MyApp extends StatefulWidget {
 //   @override
