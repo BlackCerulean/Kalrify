@@ -142,9 +142,10 @@ class MyAlert extends StatelessWidget {
             // ),
             //
             // ignore: deprecated_member_use
-            RaisedButton(
-          color: Colors.redAccent,
-          padding: EdgeInsets.all(8.0),
+            ElevatedButton(
+          style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.redAccent,
+          padding: EdgeInsets.all(8.0)),
           onPressed: () {},
           child: Column(
             mainAxisSize: MainAxisSize.min,
