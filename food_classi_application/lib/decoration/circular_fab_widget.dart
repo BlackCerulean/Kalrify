@@ -12,6 +12,7 @@ class CircularFabWidget extends StatefulWidget {
 class _CircularFabWidgetState extends State<CircularFabWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
+  int count = 0;
 
   @override
   void initState() {

@@ -127,104 +127,103 @@ void main() => runApp(MaterialApp(
 //     );
 //   }
 // }
-class MyAlert extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child:
-            // IconButton(
-            //   child: Text('Show alert',style: TextStyle(backgroundColor: Colors.grey.shade500),),
-            //   onPressed: () {
-            //     showAlertDialog(context);
-            //   },
-            // ),
-            //
-            // ignore: deprecated_member_use
-            ElevatedButton(
-          style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.redAccent,
-          padding: EdgeInsets.all(8.0)),
-          onPressed: () {},
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.info_outline_rounded,
-                  color: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Text(
-                  "Press if you don't know what to do",
-                  style: TextStyle(
-                    color: Colors.yellow,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // onPressed: () {
-          //   showAlertDialog(context);
-          // },
-        ),
-      ),
-    );
-  }
-}
-
-// showAlertDialog(BuildContext context) {
-//   // Create button
-//   Widget okButton = TextButton(
-//     child: Text("OK"),
-//     onPressed: () {
-//       Navigator.of(context).pop();
-//     },
-//   );
-
-//   // Create AlertDialog
-//   AlertDialog alert = AlertDialog(
-//     title: Text("Info"),
-//     content: Column(
-//       //mainAxisAlignment: MainAxisAlignment.start,
-//       children: [
-//         Text("This app can only detect following things: "),
-//         Text("fries,pasta,meatballs,fish,salad,coke."),
-//         SizedBox(height: 10),
-//         Text("More food types will be add."),
-//         Divider(
-//           height: 30,
+// class MyAlert extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Padding(
+//         padding: const EdgeInsets.all(20.0),
+//         child:
+//             // IconButton(
+//             //   child: Text('Show alert',style: TextStyle(backgroundColor: Colors.grey.shade500),),
+//             //   onPressed: () {
+//             //     showAlertDialog(context);
+//             //   },
+//             // ),
+//             //
+//             // ignore: deprecated_member_use
+//             RaisedButton(
 //           color: Colors.redAccent,
-//           thickness: 3,
+//           padding: EdgeInsets.all(8.0),
+//           onPressed: () {},
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: <Widget>[
+//               Padding(
+//                 padding: const EdgeInsets.all(4.0),
+//                 child: Icon(
+//                   Icons.info_outline_rounded,
+//                   color: Colors.white,
+//                 ),
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.all(2.0),
+//                 child: Text(
+//                   "Press if you don't know what to do",
+//                   style: TextStyle(
+//                     color: Colors.yellow,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           // onPressed: () {
+//           //   showAlertDialog(context);
+//           // },
 //         ),
-//         Text("1- Press the following icon :              "),
-//         Icon(Icons.fastfood_rounded),
-//         Text("2- Choose only supported/teached food picture. "),
-//         Text("3- Make sure your food image extension is supported."),
-//         Text("3.1- JPG/PNG is supported , file size is max 10 MB."),
-//         Text("4- Confidance max value is : 1              "),
-//         Text(
-//             "4.1- The closer the value is to one, the more accurate the result."),
-//         Text("5- The picture should be in sufficient      "),
-//         Text("conditions of light.                                "),
-//         Text("6- Make sure the food image is clearly visible.")
-//       ],
-//     ),
-//     actions: [
-//       okButton,
-//     ],
-//   );
-
-//   // show the dialog
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return alert;
-//     },
-//   );
+//       ),
+//     );
+//   }
 // }
+
+// // showAlertDialog(BuildContext context) {
+// //   // Create button
+// //   Widget okButton = TextButton(
+// //     child: Text("OK"),
+// //     onPressed: () {
+// //       Navigator.of(context).pop();
+// //     },
+// //   );
+
+// //   // Create AlertDialog
+// //   AlertDialog alert = AlertDialog(
+// //     title: Text("Info"),
+// //     content: Column(
+// //       //mainAxisAlignment: MainAxisAlignment.start,
+// //       children: [
+// //         Text("This app can only detect following things: "),
+// //         Text("fries,pasta,meatballs,fish,salad,coke."),
+// //         SizedBox(height: 10),
+// //         Text("More food types will be add."),
+// //         Divider(
+// //           height: 30,
+// //           color: Colors.redAccent,
+// //           thickness: 3,
+// //         ),
+// //         Text("1- Press the following icon :              "),
+// //         Icon(Icons.fastfood_rounded),
+// //         Text("2- Choose only supported/teached food picture. "),
+// //         Text("3- Make sure your food image extension is supported."),
+// //         Text("3.1- JPG/PNG is supported , file size is max 10 MB."),
+// //         Text("4- Confidance max value is : 1              "),
+// //         Text(
+// //             "4.1- The closer the value is to one, the more accurate the result."),
+// //         Text("5- The picture should be in sufficient      "),
+// //         Text("conditions of light.                                "),
+// //         Text("6- Make sure the food image is clearly visible.")
+// //       ],
+// //     ),
+// //     actions: [
+// //       okButton,
+// //     ],
+// //   );
+
+// //   // show the dialog
+// //   showDialog(
+// //     context: context,
+// //     builder: (BuildContext context) {
+// //       return alert;
+// //     },
+// //   );
+// // }
