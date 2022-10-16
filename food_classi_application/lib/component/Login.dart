@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_classi_application/component/Register.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
 import 'package:food_classi_application/homescreen.dart';
 
@@ -25,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             obscureText: true,
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -76,20 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        style: TextButton.styleFrom(padding: EdgeInsets.only(right: 0.0)),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
     );
   }
 
@@ -130,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register())),
       child: RichText(
         text: TextSpan(
           children: [
@@ -149,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
+
             ),
           ],
         ),
@@ -197,7 +185,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
                       _buildLoginBtn(),
                       _buildSignupBtn(),
                     ],
