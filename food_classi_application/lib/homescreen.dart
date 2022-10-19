@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:food_classi_application/component/Dsearch.dart';
 import 'package:food_classi_application/component/Danalyze.dart';
-
+import 'package:food_classi_application/component/Udiary.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -151,8 +151,12 @@ class HomeScreen extends StatelessWidget {
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(20.0),
                 ),
-                onPressed: () {},
-                heroTag: 'Diary',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return Udiary();
+                  }));
+                },
+                heroTag: 'Udiary',
               ),
             ),
           )
