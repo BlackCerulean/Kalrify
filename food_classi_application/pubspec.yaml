@@ -35,6 +35,7 @@ dependencies:
   json_annotation: ^4.6.0
   http: any
   percent_indicator: ^4.2.2
+  intl: ^0.17.0
   # pytorch_mobile: ^0.2.2
 #  alice: ^0.2.5
 

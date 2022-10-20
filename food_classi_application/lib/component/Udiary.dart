@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'DiaryList.dart';
+import 'package:intl/intl.dart';
 
 class Udiary extends StatefulWidget {
   @override
@@ -10,9 +11,9 @@ class Udiary extends StatefulWidget {
 class _UdiaryState extends State<Udiary> {
   bool _showData = false;
   int maxCal = 2000;
-  int eatCal = 1700;
+  int eatCal = 1600;
   List<DiaryDish> diary = [
-    DiaryDish(date: "1/Oct/2022", dish: [
+    DiaryDish(date: "1/Oct/2022", totalCal: 1138.9, dish: [
       DishList(
           name: "Pad Ka Prao Gai",
           calories: 234.3,
@@ -28,7 +29,7 @@ class _UdiaryState extends State<Udiary> {
           protein: 55.7,
           img: 'assets/KaoMokGai.jpg'),
     ]),
-    DiaryDish(date: "2/Oct/2022", dish: [
+    DiaryDish(date: "2/Oct/2022", totalCal: 864, dish: [
       DishList(
           name: "Kao Moo Dang",
           calories: 521,
@@ -52,7 +53,7 @@ class _UdiaryState extends State<Udiary> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "Search Dish Information",
+            "User Diary Information",
             style: TextStyle(
               fontSize: 19,
             ),
@@ -63,7 +64,28 @@ class _UdiaryState extends State<Udiary> {
       body: Center(
         child: ListView(children: <Widget>[
           Padding(
-              padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Container(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "Date: "+DateFormat("dd MMMM yyyy")
+                        .format(DateTime.now())
+                        .toString(),
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(color: Color.fromRGBO(255, 170, 90, 1)))),
               child: new CircularPercentIndicator(
                 radius: 100.0,
                 animation: true,
@@ -71,26 +93,37 @@ class _UdiaryState extends State<Udiary> {
                 lineWidth: 15.0,
                 percent: eatCal / maxCal,
                 center: new Text(
-                  "300 Kcal left",
+                  (maxCal - eatCal).toString() + " Kcal left",
                   style: new TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20.0,
+                      color: Color.fromRGBO(228, 87, 46, 1)),
                 ),
                 footer: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: new Text(
-                    "Max calories per day: " +
-                        eatCal.toString() +
-                        "/" +
-                        maxCal.toString() +
-                        " Kcal",
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 17.0),
-                  ),
+                  child: Row(children: [
+                    new Text(
+                      "Max calories per day: ",
+                      style: new TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17.0,
+                          color: Color.fromRGBO(228, 87, 46, 1)),
+                    ),
+                    new Text(
+                      eatCal.toString() + "/" + maxCal.toString() + " Kcal",
+                      style: new TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17.0,
+                          color: Colors.grey),
+                    ),
+                  ]),
                 ),
                 circularStrokeCap: CircularStrokeCap.butt,
                 backgroundColor: Color.fromARGB(226, 140, 179, 105),
                 progressColor: Color.fromARGB(248, 228, 88, 46),
-              )),
+              ),
+            ),
+          ),
           // DiaryList(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -118,27 +151,18 @@ class _UdiaryState extends State<Udiary> {
           collapsedTextColor: Colors.white,
 
           // backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:[
-          Text(
-            item.date,
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-          ),
-          Text(
-            "1000Kcal",
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-          ),
-        ]
-      ),
-          
-          // trailing: Text(
-          //   "1000Kcal",
-          //   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-          // ),
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              item.date,
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+            ),
+            Text(
+              (item.totalCal).toString() + "kcal",
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+            ),
+          ]),
           controlAffinity: ListTileControlAffinity.trailing,
-          
-          
           children: <Widget>[
             Container(
               constraints: BoxConstraints(
@@ -151,6 +175,7 @@ class _UdiaryState extends State<Udiary> {
                 tileColor: Colors.white,
                 child: Container(
                   child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: item.dish.length,
                     itemBuilder: (context, index) {
@@ -297,26 +322,24 @@ class _UdiaryState extends State<Udiary> {
                         child: Container(
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom: BorderSide(color: Color.fromRGBO(255, 170, 90, 1)))),
-                          child: Card(
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                child: Image.asset(item.dish[index].img),
-                                backgroundColor: Colors.transparent,
-                              ),
-                              title: Text(
-                                item.dish[index].name,
-                                style: TextStyle(
-                                    color: Color(0xFF8cb369),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              subtitle: Text(
-                                  item.dish[index].calories.toString() +
-                                      " Kcal",
-                                  style: TextStyle(
-                                      color: Color(0xFF8cb369), fontSize: 15)),
+                                  bottom: BorderSide(
+                                      color: Color.fromRGBO(255, 170, 90, 1)))),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              child: Image.asset(item.dish[index].img),
+                              backgroundColor: Colors.transparent,
                             ),
+                            title: Text(
+                              item.dish[index].name,
+                              style: TextStyle(
+                                  color: Color(0xFF8cb369),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                            subtitle: Text(
+                                item.dish[index].calories.toString() + " Kcal",
+                                style: TextStyle(
+                                    color: Color(0xFF8cb369), fontSize: 15)),
                           ),
                         ),
                       );
@@ -334,11 +357,13 @@ class _UdiaryState extends State<Udiary> {
 
 class DiaryDish {
   String date;
+  double? totalCal;
   List<DishList> dish;
   bool isExpanded;
 
   DiaryDish({
     required this.date,
+    required this.totalCal,
     required this.dish,
     this.isExpanded = false,
   });
