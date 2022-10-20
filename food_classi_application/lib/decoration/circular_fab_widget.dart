@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:food_classi_application/component/DA_component.dart';
+import 'hero_dialog_route.dart';
 
 final double buttonSize = 70;
 
@@ -53,12 +55,32 @@ class _CircularFabWidgetState extends State<CircularFabWidget>
             size: 40,
           ),
           onPressed: () {
-            if (controller.status == AnimationStatus.completed) {
+            if (icon == Icons.bookmark_add_outlined) {
+              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                var dt = DateTime.now();
+                return addDiary(
+                  day: dt.day.toString(),
+                  month: dt.month.toString(),
+                  year: dt.year.toString(),
+                  hour: dt.hour.toString(),
+                  minute: dt.minute,
+                );
+              }));
+            } else if (icon == Icons.analytics_outlined) {
+              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                return viewMealInfo();
+              }));
+            } else if (icon == Icons.add_photo_alternate_outlined) {
+              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                return selectImage();
+              }));
+            } else if (controller.status == AnimationStatus.completed) {
               controller.reverse();
             } else {
               controller.forward();
             }
           },
+          heroTag: null,
         ),
       );
 }

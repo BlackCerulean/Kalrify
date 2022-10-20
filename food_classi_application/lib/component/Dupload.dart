@@ -124,7 +124,7 @@ class _DuploadState extends State<Dupload> {
       const end = '"}';
       final startIndex = value.indexOf(start);
       final endIndex = value.indexOf(end, startIndex + start.length);
-      int l = value.length;
+      // int l = value.length;
       txt = value.substring(startIndex + start.length, endIndex);
       setState(() {});
     });

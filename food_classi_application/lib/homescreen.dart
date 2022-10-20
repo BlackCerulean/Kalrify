@@ -166,7 +166,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   void image_picker(int a, BuildContext context) async {
-    String txt = "";
     XFile? _image;
     final ImagePicker _picker = ImagePicker();
     // setState(() {});

@@ -95,6 +95,7 @@ class _DanalyzeState extends State<Danalyze> {
                     : Text(
                         "Analyze",
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),
                       ),
@@ -104,10 +105,11 @@ class _DanalyzeState extends State<Danalyze> {
                 ),
                 onPressed: () async {
                   if (isLoading) return;
+                  txt = '';
                   upload(widget.imgpath);
                   setState(() => isLoading = true);
                 },
-                heroTag: 'Danalyze',
+                heroTag: 'Analyzing',
               ),
             ),
           ),
@@ -123,7 +125,7 @@ class _DanalyzeState extends State<Danalyze> {
         new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    String base = "https://render-for-fastai.onrender.com";
+    String base = "https://kalrify-ml-services.onrender.com";
 
     var uri = Uri.parse(base + '/analyze');
 
@@ -140,7 +142,6 @@ class _DanalyzeState extends State<Danalyze> {
       const end = '"}';
       final startIndex = value.indexOf(start);
       final endIndex = value.indexOf(end, startIndex + start.length);
-      int l = value.length;
       txt = value.substring(startIndex + start.length, endIndex);
       setState(() => isLoading = false);
     });

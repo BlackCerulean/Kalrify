@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Username',
               hintStyle: kHintTextStyle,
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -80,6 +80,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildForgotPasswordBtn() {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () => print('Forgot Password Button Pressed'),
+        style: TextButton.styleFrom(padding: EdgeInsets.only(right: 0.0)),
+        child: Text(
+          'Forgot Password?',
+          style: kLabelStyle,
+        ),
+      ),
+    );
+  }
 
   Widget _buildLoginBtn() {
     return Container(
@@ -87,18 +100,18 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-        elevation: 5.0,
-        backgroundColor: Color.fromRGBO(140, 179, 105,1),
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+          elevation: 5.0,
+          primary: Color.fromRGBO(140, 179, 105, 1),
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
         ),
-      ),
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
         },
         child: Text(
           'LOGIN',
@@ -114,10 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register())),
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Register())),
       child: RichText(
         text: TextSpan(
           children: [
@@ -136,7 +149,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
-
             ),
           ],
         ),
@@ -156,8 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                ),
+                decoration: BoxDecoration(),
               ),
               Container(
                 height: double.infinity,
@@ -198,4 +209,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

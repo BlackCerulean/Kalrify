@@ -70,9 +70,10 @@ class _UdiaryState extends State<Udiary> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Text(
-                    "Date: "+DateFormat("dd MMMM yyyy")
-                        .format(DateTime.now())
-                        .toString(),
+                    "Date: " +
+                        DateFormat("dd MMMM yyyy")
+                            .format(DateTime.now())
+                            .toString(),
                     style: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -158,11 +159,17 @@ class _UdiaryState extends State<Udiary> {
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
             Text(
-              (item.totalCal).toString() + "kcal",
+              "1000Kcal",
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
           ]),
+
+          // trailing: Text(
+          //   "1000Kcal",
+          //   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+          // ),
           controlAffinity: ListTileControlAffinity.trailing,
+
           children: <Widget>[
             Container(
               constraints: BoxConstraints(
@@ -324,22 +331,25 @@ class _UdiaryState extends State<Udiary> {
                               border: Border(
                                   bottom: BorderSide(
                                       color: Color.fromRGBO(255, 170, 90, 1)))),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              child: Image.asset(item.dish[index].img),
-                              backgroundColor: Colors.transparent,
-                            ),
-                            title: Text(
-                              item.dish[index].name,
-                              style: TextStyle(
-                                  color: Color(0xFF8cb369),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                            subtitle: Text(
-                                item.dish[index].calories.toString() + " Kcal",
+                          child: Card(
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                child: Image.asset(item.dish[index].img),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              title: Text(
+                                item.dish[index].name,
                                 style: TextStyle(
-                                    color: Color(0xFF8cb369), fontSize: 15)),
+                                    color: Color(0xFF8cb369),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              subtitle: Text(
+                                  item.dish[index].calories.toString() +
+                                      " Kcal",
+                                  style: TextStyle(
+                                      color: Color(0xFF8cb369), fontSize: 15)),
+                            ),
                           ),
                         ),
                       );
