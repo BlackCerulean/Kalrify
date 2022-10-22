@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Dsearch extends StatefulWidget {
   @override
@@ -8,6 +11,20 @@ class Dsearch extends StatefulWidget {
 class _DsearchState extends State<Dsearch> {
   final TextEditingController searchController = TextEditingController();
   bool isExecuted = false;
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/dish/getDish';
+  List database = [];
+
+  Future<String> getDishData() async{
+    var res = await http.get(Uri.parse(url), headers: {"Accept": "application/json"});
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      database = resBody["dish"];
+    });
+    
+    return "Success!";
+  }
+
   List<DishList> dishStock = [
     DishList(
         name: "Pad Ka Prao Gai",
@@ -107,7 +124,7 @@ class _DsearchState extends State<Dsearch> {
                       EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                    itemCount: dishStock.length,
+                    itemCount: database.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -116,22 +133,25 @@ class _DsearchState extends State<Dsearch> {
                               builder: (context) {
                                 return Column(
                                   children: [
+                                    // Dish Name
                                     Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
                                       child: Text(
-                                        dishStock[index].name,
+                                        database[index]["FoodNameENG"],
                                         style: TextStyle(fontSize: 30),
                                       ),
                                     ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.5,
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.3,
-                                      child: Image.asset(dishStock[index].img),
-                                    ),
+                                    // // Dish Image
+                                    // Container(
+                                    //   width: MediaQuery.of(context).size.width *
+                                    //       0.5,
+                                    //   height:
+                                    //       MediaQuery.of(context).size.width *
+                                    //           0.3,
+                                    //   child: Image.asset(database[index].img),
+                                    // ),
+                                    // Calories
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
@@ -163,8 +183,8 @@ class _DsearchState extends State<Dsearch> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Calories: " +
-                                                            dishStock[index]
-                                                                .calories
+                                                            database[index]
+                                                                ["Calories"]
                                                                 .toString() +
                                                             " (Kcal) ",
                                                         style: TextStyle(
@@ -176,6 +196,7 @@ class _DsearchState extends State<Dsearch> {
                                               ],
                                             ),
                                           ),
+                                          // Nutrients
                                           Container(
                                             child: Text(
                                               "Nutritions",
@@ -200,8 +221,8 @@ class _DsearchState extends State<Dsearch> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Fat: " +
-                                                            dishStock[index]
-                                                                .fat
+                                                            database[index]
+                                                                ["Fat"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -215,8 +236,8 @@ class _DsearchState extends State<Dsearch> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Carbohydrate: " +
-                                                            dishStock[index]
-                                                                .carbo
+                                                            database[index]
+                                                                ["Carb"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -230,8 +251,8 @@ class _DsearchState extends State<Dsearch> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Protein: " +
-                                                            dishStock[index]
-                                                                .protein
+                                                            database[index]
+                                                                ["Protein"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -251,19 +272,19 @@ class _DsearchState extends State<Dsearch> {
                               });
                         },
                         child: ListTile(
-                          leading: CircleAvatar(
-                            child: Image.asset(dishStock[index].img),
-                            backgroundColor: Colors.transparent,
-                          ),
+                          // leading: CircleAvatar(
+                          //   child: Image.asset(database[index].img),
+                          //   backgroundColor: Colors.transparent,
+                          // ),
                           title: Text(
-                            dishStock[index].name,
+                            database[index]["FoodNameENG"],
                             style: TextStyle(
                                 color: Color(0xFF8cb369),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
                           ),
                           subtitle: Text(
-                              dishStock[index].calories.toString() + " Kcal",
+                              database[index]["Calories"].toString() + " Kcal",
                               style: TextStyle(
                                   color: Color(0xFF8cb369), fontSize: 15)),
                         ),
@@ -278,6 +299,10 @@ class _DsearchState extends State<Dsearch> {
       ),
     );
   }
+  void initState(){
+  super.initState();
+  this.getDishData();
+}
 }
 
 class DishList {
