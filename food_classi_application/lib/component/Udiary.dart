@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'DiaryList.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Udiary extends StatefulWidget {
   @override
@@ -9,6 +12,21 @@ class Udiary extends StatefulWidget {
 }
 
 class _UdiaryState extends State<Udiary> {
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/diary/getDiary';
+  List database = [];
+
+  Future<String> getDiaryData() async{
+    var res = await http.get(Uri.parse(url), headers: {"Accept": "application/json"});
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      database = resBody["diary"];
+      database = database.reversed.toList();
+    });
+    
+    return "Success!";
+  }
+
   bool _showData = false;
   int maxCal = 2000;
   int eatCal = 1600;
@@ -132,9 +150,9 @@ class _UdiaryState extends State<Udiary> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
-              itemCount: diary.length,
+              itemCount: database.length,
               itemBuilder: (BuildContext context, int index) {
-                return _buildPlayerModelList(diary[index]);
+                return _buildPlayerModelList(database[index]);
               },
             ),
           ),
@@ -143,11 +161,16 @@ class _UdiaryState extends State<Udiary> {
     );
   }
 
-  Widget _buildPlayerModelList(DiaryDish item) {
+  Widget _buildPlayerModelList(item) {
+    List dish_list=[];
+    var resDish = json.decode(item["dishList"]);
+        dish_list = resDish["body"];
+        print(dish_list);
     return Card(
       child: ListTileTheme(
         tileColor: const Color(0xFF8cb369),
         child: ExpansionTile(
+          
           textColor: Colors.white,
           collapsedTextColor: Colors.white,
 
@@ -155,21 +178,15 @@ class _UdiaryState extends State<Udiary> {
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              item.date,
+              item["date"],
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
             Text(
-              "1000Kcal",
+              (item["totalCal"]).toString() + "kcal",
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
           ]),
-
-          // trailing: Text(
-          //   "1000Kcal",
-          //   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-          // ),
           controlAffinity: ListTileControlAffinity.trailing,
-
           children: <Widget>[
             Container(
               constraints: BoxConstraints(
@@ -182,10 +199,13 @@ class _UdiaryState extends State<Udiary> {
                 tileColor: Colors.white,
                 child: Container(
                   child: ListView.builder(
+                    
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: item.dish.length,
+                    itemCount: dish_list.length,
                     itemBuilder: (context, index) {
+                      // item["dishList"] = item["dishList"].to;
+                      print(dish_list);
                       return GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
@@ -197,18 +217,18 @@ class _UdiaryState extends State<Udiary> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
                                       child: Text(
-                                        item.dish[index].name,
+                                        dish_list[index]["FoodNameENG"],
                                         style: TextStyle(fontSize: 30),
                                       ),
                                     ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.5,
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.3,
-                                      child: Image.asset(item.dish[index].img),
-                                    ),
+                                    // Container(
+                                    //   width: MediaQuery.of(context).size.width *
+                                    //       0.5,
+                                    //   height:
+                                    //       MediaQuery.of(context).size.width *
+                                    //           0.3,
+                                    //   child: Image.asset(item.dish[index].img),
+                                    // ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
@@ -240,8 +260,7 @@ class _UdiaryState extends State<Udiary> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Calories: " +
-                                                            item.dish[index]
-                                                                .calories
+                                                            dish_list[index]["Calories"]
                                                                 .toString() +
                                                             " (Kcal) ",
                                                         style: TextStyle(
@@ -277,7 +296,7 @@ class _UdiaryState extends State<Udiary> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Fat: " +
-                                                            item.dish[index].fat
+                                                            dish_list[index]["Fat"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -291,8 +310,7 @@ class _UdiaryState extends State<Udiary> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Carbohydrate: " +
-                                                            item.dish[index]
-                                                                .carbo
+                                                            dish_list[index]["Carb"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -306,8 +324,7 @@ class _UdiaryState extends State<Udiary> {
                                                               vertical: 10),
                                                       child: Text(
                                                         "Protein: " +
-                                                            item.dish[index]
-                                                                .protein
+                                                            dish_list[index]["Protein"]
                                                                 .toString() +
                                                             " (g.)",
                                                         style: TextStyle(
@@ -331,27 +348,25 @@ class _UdiaryState extends State<Udiary> {
                               border: Border(
                                   bottom: BorderSide(
                                       color: Color.fromRGBO(255, 170, 90, 1)))),
-                          child: Card(
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                child: Image.asset(item.dish[index].img),
-                                backgroundColor: Colors.transparent,
-                              ),
+                          child: ListTile(
+                              // leading: CircleAvatar(
+                              //   child: Image.asset(item.dish[index].img),
+                              //   backgroundColor: Colors.transparent,
+                              // ),
                               title: Text(
-                                item.dish[index].name,
+                                dish_list[index]["FoodNameENG"],
                                 style: TextStyle(
                                     color: Color(0xFF8cb369),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20),
                               ),
                               subtitle: Text(
-                                  item.dish[index].calories.toString() +
-                                      " Kcal",
+                                  dish_list[index]["Calories"].toString() +
+                                      " kcal",
                                   style: TextStyle(
                                       color: Color(0xFF8cb369), fontSize: 15)),
                             ),
                           ),
-                        ),
                       );
                     },
                   ),
@@ -363,6 +378,10 @@ class _UdiaryState extends State<Udiary> {
       ),
     );
   }
+  void initState(){
+  super.initState();
+  this.getDiaryData();
+}
 }
 
 class DiaryDish {
