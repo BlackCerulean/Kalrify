@@ -1,21 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_classi_application/component/Register.dart';
+import 'package:food_classi_application/component/Login.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
 import 'package:food_classi_application/homescreen.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegisScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisScreenState createState() => _RegisScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  Widget _buildEmailTF() {
+class _RegisScreenState extends State<RegisScreen> {
+  Widget _buildUserTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           'Username',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.name,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.person,
+                color: Color.fromRGBO(255, 120, 90,1),
+              ),
+              hintText: 'Enter your Username',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmailTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Email Address',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -34,9 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Color.fromRGBO(255, 120, 90, 1),
+                color: Color.fromRGBO(255, 120, 90,1),
               ),
-              hintText: 'Enter your Username',
+              hintText: 'Enter your Email Address',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -69,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Color.fromRGBO(255, 120, 90, 1),
+                color: Color.fromRGBO(255, 120, 90,1),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -80,17 +115,73 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        style: TextButton.styleFrom(padding: EdgeInsets.only(right: 0.0)),
-        child: Text(
-          'Forgot Password?',
+  Widget _buildHeightTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Height',
           style: kLabelStyle,
         ),
-      ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.height,
+                color: Color.fromRGBO(255, 120, 90,1),
+              ),
+              hintText: 'Enter your Height',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+   Widget _buildWeightTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Weight',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.scale,
+                color: Color.fromRGBO(255, 120, 90,1),
+              ),
+              hintText: 'Enter your Weight',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -100,21 +191,21 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          elevation: 5.0,
-          primary: Color.fromRGBO(140, 179, 105, 1),
-          padding: EdgeInsets.all(15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
+        elevation: 5.0,
+        backgroundColor: Color.fromRGBO(140, 179, 105,1),
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
         ),
+      ),
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
         },
         child: Text(
-          'LOGIN',
+          'Sign Up',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.5,
@@ -127,14 +218,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisScreen())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen())),
       child: RichText(
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have an Account? ',
+              text: 'Already haven an account ',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 18.0,
@@ -142,18 +234,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: 'Sign In',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
+
             ),
           ],
         ),
       ),
     );
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +261,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(),
+                decoration: BoxDecoration(
+                ),
               ),
               Container(
                 height: double.infinity,
@@ -181,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'OpenSans',
@@ -190,11 +285,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 30.0),
-                      _buildEmailTF(),
+                      _buildUserTF(),
                       SizedBox(
-                        height: 30.0,
+                        height: 20.0,
                       ),
                       _buildPasswordTF(),
+                       SizedBox(
+                        height: 20.0,
+                      ),
+                      _buildEmailTF(),
+                       SizedBox(
+                        height: 20.0,
+                      ),
+                       _buildHeightTF(),
+                      SizedBox(
+                        height: 20.0,
+                      ), 
+                      _buildWeightTF(),
+                      SizedBox(
+                        height: 20.0,
+                      ),     
                       _buildLoginBtn(),
                       _buildSignupBtn(),
                     ],
@@ -208,3 +318,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
