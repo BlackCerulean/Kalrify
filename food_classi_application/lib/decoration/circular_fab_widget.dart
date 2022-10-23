@@ -68,7 +68,7 @@ class _CircularFabWidgetState extends State<CircularFabWidget>
               }));
             } else if (icon == Icons.analytics_outlined) {
               Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                return viewMealInfo();
+                return Viewmeal();
               }));
             } else if (icon == Icons.add_photo_alternate_outlined) {
               Navigator.of(context).push(HeroDialogRoute(builder: (context) {

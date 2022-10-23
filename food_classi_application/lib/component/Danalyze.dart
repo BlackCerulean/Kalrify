@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
+import 'dart:async';
 
 String foodName = "";
 String txt1 = "Upload or take an image of Thai Food";
@@ -26,6 +27,7 @@ class Danalyze extends StatefulWidget {
 
 class _DanalyzeState extends State<Danalyze> {
   bool isLoading = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,4 +148,5 @@ class _DanalyzeState extends State<Danalyze> {
       setState(() => isLoading = false);
     });
   }
+  
 }
