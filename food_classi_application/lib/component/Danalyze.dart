@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
-String txt = "";
+String foodName = "";
 String txt1 = "Upload or take an image of Thai Food";
 
 class Danalyze extends StatefulWidget {
@@ -57,7 +57,7 @@ class _DanalyzeState extends State<Danalyze> {
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
                       child: Text(
-                        txt,
+                        foodName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 25.0,
@@ -105,7 +105,7 @@ class _DanalyzeState extends State<Danalyze> {
                 ),
                 onPressed: () async {
                   if (isLoading) return;
-                  txt = '';
+                  foodName = '';
                   upload(widget.imgpath);
                   setState(() => isLoading = true);
                 },
@@ -142,7 +142,7 @@ class _DanalyzeState extends State<Danalyze> {
       const end = '"}';
       final startIndex = value.indexOf(start);
       final endIndex = value.indexOf(end, startIndex + start.length);
-      txt = value.substring(startIndex + start.length, endIndex);
+      foodName = value.substring(startIndex + start.length, endIndex);
       setState(() => isLoading = false);
     });
   }

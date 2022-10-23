@@ -12,7 +12,7 @@ import 'dart:convert';
 
 void main() => runApp(MaterialApp(
     // home: HomeScreen(),
-    home: LoginScreen()));
+    home: HomeScreen()));
 
 // class MyApp extends StatefulWidget {
 //   @override

@@ -227,7 +227,7 @@ class addDiary extends StatelessWidget {
                                   padding: EdgeInsets.all(
                                       MediaQuery.of(context).size.width * 0.01),
                                   child: Text(
-                                    txt,
+                                    foodName,
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
