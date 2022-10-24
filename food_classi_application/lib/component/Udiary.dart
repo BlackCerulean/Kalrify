@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'DiaryList.dart';
@@ -439,7 +441,7 @@ class _UdiaryState extends State<Udiary> {
                                       color: Color.fromRGBO(255, 170, 90, 1)))),
                           child: ListTile(
                               // leading: CircleAvatar(
-                              //   child: Image.asset(item.dish[index].img),
+                              //   child: new Image.memory(Uint8List.fromList(database[index]["Image"]["data"].cast<int>())),
                               //   backgroundColor: Colors.transparent,
                               // ),
                               title: Text(

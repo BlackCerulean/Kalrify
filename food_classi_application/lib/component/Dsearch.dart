@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 class Dsearch extends StatefulWidget {
@@ -72,6 +73,9 @@ class _DsearchState extends State<Dsearch> {
   ];
   @override
   Widget build(BuildContext context) {
+    if (database.isNotEmpty){
+    print(Uint8List.fromList(database[0]["Image"]["data"].cast<int>()));
+    }
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -154,15 +158,15 @@ class _DsearchState extends State<Dsearch> {
                                         ),
                                       ),
                                     ),
-                                    // // Dish Image
-                                    // Container(
-                                    //   width: MediaQuery.of(context).size.width *
-                                    //       0.5,
-                                    //   height:
-                                    //       MediaQuery.of(context).size.width *
-                                    //           0.3,
-                                    //   child: Image.asset(database[index].img),
-                                    // ),
+                                    // Dish Image
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.3,
+                                      child: new Image.memory(Uint8List.fromList(database[index]["Image"]["data"].cast<int>())),
+                                    ),
                                     // Calories
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -390,10 +394,10 @@ class _DsearchState extends State<Dsearch> {
                               });
                         },
                         child: ListTile(
-                          // leading: CircleAvatar(
-                          //   child: Image.asset(database[index].img),
-                          //   backgroundColor: Colors.transparent,
-                          // ),
+                          leading: CircleAvatar(
+                            child: new Image.memory(Uint8List.fromList(database[index]["Image"]["data"].cast<int>())),
+                            backgroundColor: Colors.transparent,
+                          ),
                           title: Text(
                             database[index]["FoodNameENG"],
                             style: TextStyle(
