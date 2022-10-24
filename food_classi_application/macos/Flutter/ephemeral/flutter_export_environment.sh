@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/opt/homebrew/Caskroom/flutter/3.3.1/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/sinx/Documents/Kalrify/food_classi_application"
+export "FLUTTER_ROOT=/Users/newjanpinitrat/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/newjanpinitrat/Documents/GitHub/Kalrify/food_classi_application"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

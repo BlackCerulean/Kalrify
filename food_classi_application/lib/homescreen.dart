@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:food_classi_application/component/Dsearch.dart';
 import 'package:food_classi_application/component/Danalyze.dart';
 import 'package:food_classi_application/component/Udiary.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -171,7 +172,11 @@ class HomeScreen extends StatelessWidget {
     // setState(() {});
     debugPrint("Image Picker Activated");
     if (a == 0) {
-      _image = (await _picker.pickImage(source: ImageSource.camera))!;
+      _image = (await _picker.pickImage(
+          source: ImageSource.camera,
+          maxHeight: 512,
+          maxWidth: 512,
+          imageQuality: 80))!;
     } else {
       _image = (await _picker.pickImage(source: ImageSource.gallery))!;
     }

@@ -13,6 +13,7 @@ import 'dart:async';
 
 String foodName = "";
 String txt1 = "Upload or take an image of Thai Food";
+List database = [];
 
 class Danalyze extends StatefulWidget {
 // Image variable
@@ -28,6 +29,22 @@ class Danalyze extends StatefulWidget {
 class _DanalyzeState extends State<Danalyze> {
   bool isLoading = false;
 
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/analyze/getAnalyze';
+  // List database = [];
+
+  Future<String> getDishInfo() async {
+    var res = await http.get(
+      Uri.parse(url),
+      headers: {"Accept": "application/json", "food": foodName.toString()},
+    );
+
+    setState(() {
+      var resBody = json.decode(res.body);
+      database = resBody["analyze"];
+    });
+
+    return "Success!";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,5 +165,9 @@ class _DanalyzeState extends State<Danalyze> {
       setState(() => isLoading = false);
     });
   }
-  
+
+  void initState() {
+    super.initState();
+    this.getDishInfo();
+  }
 }

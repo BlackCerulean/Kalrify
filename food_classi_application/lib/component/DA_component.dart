@@ -9,6 +9,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+// List database = [];
+
 class selectImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -106,7 +108,11 @@ class selectImage extends StatelessWidget {
     // setState(() {});
     debugPrint("Image Picker Activated");
     if (a == 0) {
-      _image = (await _picker.pickImage(source: ImageSource.camera))!;
+      _image = (await _picker.pickImage(
+          source: ImageSource.camera,
+          maxHeight: 512,
+          maxWidth: 512,
+          imageQuality: 80))!;
     } else {
       _image = (await _picker.pickImage(source: ImageSource.gallery))!;
     }
@@ -127,14 +133,17 @@ class Viewmeal extends StatefulWidget {
   @override
   State<Viewmeal> createState() => _ViewmealState();
 }
+
 class _ViewmealState extends State<Viewmeal> {
   bool isExecuted = false;
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/analyze/getAnalyze';
-  List database=[];
+  // List database = [];
 
   Future<String> getDishInfo() async {
-    var res =
-        await http.get(Uri.parse(url), headers: {"Accept": "application/json" , "food":foodName.toString()},);
+    var res = await http.get(
+      Uri.parse(url),
+      headers: {"Accept": "application/json", "food": foodName.toString()},
+    );
 
     setState(() {
       var resBody = json.decode(res.body);
@@ -143,25 +152,11 @@ class _ViewmealState extends State<Viewmeal> {
 
     return "Success!";
   }
-  
 
   @override
   Widget build(BuildContext context) {
     print(database);
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "Search Dish Information",
-            style: TextStyle(
-              fontSize: 19,
-            ),
-          ),
-        ),
-        backgroundColor: Color(0xFF8cb369),
-      ),
-      body:
-    Center(
+    return Center(
       child: Hero(
           tag: 'view-meal-info',
           child: Container(
@@ -172,269 +167,342 @@ class _ViewmealState extends State<Viewmeal> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(36)),
               child: SingleChildScrollView(
-                child: Padding(padding: const EdgeInsets.only(top: 20), 
-                                child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: database.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Flexible(child: Column(
-                                  children: <Widget>[
-                                    // Dish Name
-                                    Center(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        child: Center(
-                                          child: Text(
-                                            database[0]["FoodNameENG"] +
-                                                "(" +
-                                                database[0]["FoodNameTH"] +
-                                                ")",
-                                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(228, 87, 46, 1)),
-                                          ),
-                                        ),
+                child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: database.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Flexible(
+                            child: Column(
+                              children: <Widget>[
+                                // Dish Name
+                                Center(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    child: Center(
+                                      child: Text(
+                                        database[0]["FoodNameENG"] +
+                                            "(" +
+                                            database[0]["FoodNameTH"] +
+                                            ")",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color:
+                                                Color.fromRGBO(228, 87, 46, 1)),
                                       ),
                                     ),
-      //                               // // Dish Image
-      //                               // Container(
-      //                               //   width: MediaQuery.of(context).size.width *
-      //                               //       0.5,
-      //                               //   height:
-      //                               //       MediaQuery.of(context).size.width *
-      //                               //           0.3,
-      //                               //   child: Image.asset(database[index].img),
-      //                               // ),
-      //                               // Calories
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Color.fromRGBO(
-                                                              255,
-                                                              170,
-                                                              90,
-                                                              1)))),
-                                              child: Column(children: [
-                                                Container(
-                                                  child: Text(
-                                                    "Energy",
-                                                    style:
-                                                        TextStyle(fontSize: 20, color: Colors.grey),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
+                                  ),
+                                ),
+                                //                               // // Dish Image
+                                //                               // Container(
+                                //                               //   width: MediaQuery.of(context).size.width *
+                                //                               //       0.5,
+                                //                               //   height:
+                                //                               //       MediaQuery.of(context).size.width *
+                                //                               //           0.3,
+                                //                               //   child: Image.asset(database[index].img),
+                                //                               // ),
+                                //                               // Calories
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Color.fromRGBO(
+                                                          255, 170, 90, 1)))),
+                                          child: Column(children: [
+                                            Container(
+                                              child: Text(
+                                                "Energy",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
                                                       horizontal: 20,
                                                       vertical: 5),
-                                                  child: Row(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
-                                                            child: Row(children: [
-                                                              Text(
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
                                                               "Calories per dish: ",
                                                               style: TextStyle(
-                                                                  fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
+                                                                  fontSize: 14,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
                                                             ),
                                                             Text(
-                                                                  database[0]
-                                                                          [
-                                                                          "Calories"]
+                                                              database[0]["Calories"]
                                                                       .toString() +
                                                                   " (Kcal) ",
                                                               style: TextStyle(
-                                                                  fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
+                                                                  fontSize: 14,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
                                                             ),
-                                                            ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
-                                                            child: Row(children: [
-                                                              Text(
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
                                                               "Portion: ",
                                                               style: TextStyle(
-                                                                  fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
+                                                                  fontSize: 14,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
                                                             ),
                                                             Text(
-                                                              database[0]
-                                                                          [
-                                                                          "Portion"]
+                                                              database[0]["Portion"]
                                                                       .toString() +
                                                                   " (Serving) ",
                                                               style: TextStyle(
-                                                                  fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
+                                                                  fontSize: 14,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
                                                             ),
-                                                            ],),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ]),
-                                            ),
-                                          ),
-                                          // Nutrients
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: Container(
-                                              child: Text(
-                                                "Nutritions",
-                                                style: TextStyle(fontSize: 20, color: Colors.grey),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 5,
-                                            ),
-                                            child: Center(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  // Nutrition Column 1
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Row(children: [
-                                                          Text(
-                                                          "Fat: ",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
-                                                        ),
-                                                        Text(
-                                                          database[0]
-                                                                      ["Fat"]
-                                                                  .toString() +
-                                                              " (g.)",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
-                                                        ),
-                                                        ],),
-                                                      ),
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Row(children: [
-                                                          Text(
-                                                          "Carbohydrate: ",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
-                                                        ),
-                                                        Text(
-                                                          database[0]
-                                                                      ["Carb"]
-                                                                  .toString() +
-                                                              " (g.)",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
-                                                        ),
-                                                        ],),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  // Nutrition Column 2
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Row(children: [
-                                                          Text(
-                                                          "Fat: ",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
-                                                        ),
-                                                        Text(
-                                                          database[0]
-                                                                      ["Sodium"]
-                                                                  .toString() +
-                                                              " (mg.)",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
-                                                        ),
-                                                        ],),
-                                                      ),
-                                                      Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Row(children: [
-                                                          Text(
-                                                          "Protein: ",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
-                                                        ),
-                                                        Text(
-                                                          database[0][
-                                                                      "Protein"]
-                                                                  .toString() +
-                                                              " (g.)",
-                                                          style: TextStyle(
-                                                              fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
-                                                        ),
-                                                        ],),
-                                                      )
                                                     ],
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      )
+                                          ]),
+                                        ),
                                       ),
-                                    )
-                                  ],
-              ),);})),
+                                      // Nutrients
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Container(
+                                          child: Text(
+                                            "Nutritions",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.grey),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 5,
+                                        ),
+                                        child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              // Nutrition Column 1
+                                              Column(
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Fat: ",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      228,
+                                                                      87,
+                                                                      46,
+                                                                      1)),
+                                                        ),
+                                                        Text(
+                                                          database[0]["Fat"]
+                                                                  .toString() +
+                                                              " (g.)",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      140,
+                                                                      179,
+                                                                      105,
+                                                                      1)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Carbohydrate: ",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      228,
+                                                                      87,
+                                                                      46,
+                                                                      1)),
+                                                        ),
+                                                        Text(
+                                                          database[0]["Carb"]
+                                                                  .toString() +
+                                                              " (g.)",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      140,
+                                                                      179,
+                                                                      105,
+                                                                      1)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              // Nutrition Column 2
+                                              Column(
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Fat: ",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      228,
+                                                                      87,
+                                                                      46,
+                                                                      1)),
+                                                        ),
+                                                        Text(
+                                                          database[0]["Sodium"]
+                                                                  .toString() +
+                                                              " (mg.)",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      140,
+                                                                      179,
+                                                                      105,
+                                                                      1)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Protein: ",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      228,
+                                                                      87,
+                                                                      46,
+                                                                      1)),
+                                                        ),
+                                                        Text(
+                                                          database[0]["Protein"]
+                                                                  .toString() +
+                                                              " (g.)",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      140,
+                                                                      179,
+                                                                      105,
+                                                                      1)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                                )
+                              ],
+                            ),
+                          );
+                        })),
               ),
             ),
-           )),
-    ),);
+          )),
+    );
   }
 
   void initState() {
@@ -553,7 +621,8 @@ class addDiary extends StatelessWidget {
                                   padding: EdgeInsets.all(
                                       MediaQuery.of(context).size.width * 0.01),
                                   child: Text(
-                                    '240' + ' kcal per dish',
+                                    database[0]["Calories"].toString() +
+                                        ' kcal per dish',
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
