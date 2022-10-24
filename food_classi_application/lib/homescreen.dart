@@ -182,6 +182,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     Navigator.push(context, MaterialPageRoute(builder: (_) {
+      foodName = '';
       return Danalyze(
         image: _image,
         imgpath: File(_image!.path),

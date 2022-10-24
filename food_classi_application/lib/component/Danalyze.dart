@@ -11,6 +11,8 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'dart:async';
 
+import '../homescreen.dart';
+
 String foodName = "";
 String txt1 = "Upload or take an image of Thai Food";
 List database = [];
@@ -51,6 +53,13 @@ class _DanalyzeState extends State<Danalyze> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          ),
+        ),
         title: Center(
           child: Text(
             "Analysis of Dish Image",
@@ -162,12 +171,13 @@ class _DanalyzeState extends State<Danalyze> {
       final startIndex = value.indexOf(start);
       final endIndex = value.indexOf(end, startIndex + start.length);
       foodName = value.substring(startIndex + start.length, endIndex);
+      this.getDishInfo();
       setState(() => isLoading = false);
     });
   }
 
-  void initState() {
-    super.initState();
-    this.getDishInfo();
-  }
+  // void initState() {
+  //   super.initState();
+  //   // this.getDishInfo();
+  // }
 }
