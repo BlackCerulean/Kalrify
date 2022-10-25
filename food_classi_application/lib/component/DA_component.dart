@@ -168,7 +168,7 @@ class _ViewmealState extends State<Viewmeal> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(36)),
               child: SingleChildScrollView(
-                child: foodName == ''
+                child: database == []
                     ? Padding(
                         padding: EdgeInsets.all(
                             MediaQuery.of(context).size.width * 0.02),
@@ -597,7 +597,7 @@ class _addDiaryState extends State<addDiary> {
                   borderRadius: BorderRadius.circular(18)),
               child: SingleChildScrollView(
                 child: Container(
-                  child: foodName == ''
+                  child: database == []
                       ? Padding(
                           padding: EdgeInsets.all(
                               MediaQuery.of(context).size.width * 0.02),

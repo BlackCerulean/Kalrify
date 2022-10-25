@@ -134,6 +134,7 @@ class _DanalyzeState extends State<Danalyze> {
                 onPressed: () async {
                   if (isLoading) return;
                   foodName = '';
+                  database = [];
                   upload(widget.imgpath);
                   setState(() => isLoading = true);
                 },
@@ -176,8 +177,8 @@ class _DanalyzeState extends State<Danalyze> {
     });
   }
 
-  // void initState() {
-  //   super.initState();
-  //   // this.getDishInfo();
-  // }
+  void initState() {
+    super.initState();
+    // this.getDishInfo();
+  }
 }
