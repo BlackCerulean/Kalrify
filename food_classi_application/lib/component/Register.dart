@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_classi_application/component/Login.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
-import 'package:food_classi_application/homescreen.dart';
+import 'package:food_classi_application/component/Login.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisScreen extends StatefulWidget {
   @override
@@ -10,6 +14,32 @@ class RegisScreen extends StatefulWidget {
 }
 
 class _RegisScreenState extends State<RegisScreen> {
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/auth/register';
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController height = TextEditingController();
+  TextEditingController weight = TextEditingController();
+  
+  Future regis() async{
+    var res = await http.post(Uri.parse(url), body: {
+      "username": username.text, 
+      "password": password.text, 
+      "email": email.text, 
+      "weight": weight.text, 
+      "height": height.text,
+    });
+    var resBody = json.decode(res.body);
+    
+    if(res.statusCode == 200){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        String token = resBody['token'];
+        print(token);
+    } else{
+      print('Error');
+    }
+      return "Success!";
+    }
   Widget _buildUserTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,6 +54,7 @@ class _RegisScreenState extends State<RegisScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: username,
             keyboardType: TextInputType.name,
             style: TextStyle(
               color: Colors.black,
@@ -59,6 +90,7 @@ class _RegisScreenState extends State<RegisScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: email,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -94,6 +126,7 @@ class _RegisScreenState extends State<RegisScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: password,
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -129,6 +162,7 @@ class _RegisScreenState extends State<RegisScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: height,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -164,6 +198,7 @@ class _RegisScreenState extends State<RegisScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: weight,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -198,12 +233,7 @@ class _RegisScreenState extends State<RegisScreen> {
         borderRadius: BorderRadius.circular(30.0),
         ),
       ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
-        },
+        onPressed: () => regis(),
         child: Text(
           'Sign Up',
           style: TextStyle(
