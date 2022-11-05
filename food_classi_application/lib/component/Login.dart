@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_classi_application/component/Register.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
 import 'package:food_classi_application/homescreen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:intl/number_symbols_data.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,6 +16,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/auth/login';
+  TextEditingController username = TextEditingController();
+  TextEditingController password= TextEditingController();
+  
+
+  Future login() async{
+    var res = await http.post(Uri.parse(url), body: {
+      "username": username.text, "password": password.text
+    });
+    var resBody = json.decode(res.body);
+    
+    if(res.statusCode == 200){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        String token = resBody['token'];
+        print(token);
+    } else{
+      print('Error');
+    }
+      return "Success!";
+    }
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: username,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -59,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: password,
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -107,12 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
-        },
+        onPressed: () => login(),
         child: Text(
           'LOGIN',
           style: TextStyle(
