@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Dsearch extends StatefulWidget {
   @override
@@ -13,12 +14,17 @@ class _DsearchState extends State<Dsearch> {
   final TextEditingController searchController = TextEditingController();
   bool isExecuted = false;
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/dish/getDish';
+  final String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
   List database = [];
   List items = [];
+  var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NjM1MDA2fQ.REaJTMWlDkJRqxoR9YrZ2f8zwXE_0_y6kOcTdGFbqWk';
+
+  
+
 
   Future<String> getDishData() async {
     var res =
-        await http.get(Uri.parse(url), headers: {"Accept": "application/json"});
+        await http.get(Uri.parse(url), headers: {'Content-Type': 'application/json; charset=UTF-8', 'Authorization':'Bearer $token'});
 
     setState(() {
       var resBody = json.decode(res.body);
@@ -28,6 +34,35 @@ class _DsearchState extends State<Dsearch> {
 
     return "Success!";
   }
+
+    Future addDiary( cal, engName, thName, fat, carb, protein, sodium, portion) async{
+      var date = DateFormat("yyyy-MM-dd")
+                            .format(DateTime.now())
+                            .toString();
+    var res = await http.post(Uri.parse(addUrl), 
+    headers:<String, String>{
+     'Authorization':'Bearer $token'},
+    body: {
+      "date_Now": date,
+      "total_Cal": cal,
+      "FoodNameENG":engName,                                      
+      "FoodNameTH":thName, 
+      "Fat":fat, 
+      "Carb":carb, 
+      "Protein":protein, 
+      "Sodium":sodium, 
+      "Portion":portion,
+    },
+    );
+    print(res.statusCode);
+    
+    if(res.statusCode == 200){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Dsearch()));
+    } else{
+      print('Error');
+    }
+      return "Success!";
+    }
 
   void filterSearchResults(String query) {
     List dummySearchList = [];
@@ -62,53 +97,9 @@ class _DsearchState extends State<Dsearch> {
     searchController.dispose();
     super.dispose();
   }
-
-  List<DishList> dishStock = [
-    DishList(
-        name: "Pad Ka Prao Gai",
-        calories: 234.3,
-        carbo: 11.8,
-        fat: 13.2,
-        protein: 18.0,
-        img: 'assets/PadKaPraoGai.jpg'),
-    DishList(
-        name: "Kao Mok Gai",
-        calories: 904.6,
-        carbo: 81.8,
-        fat: 38.4,
-        protein: 55.7,
-        img: 'assets/KaoMokGai.jpg'),
-    DishList(
-        name: "Kao Moo Dang",
-        calories: 521,
-        carbo: 71.3,
-        fat: 16.5,
-        protein: 21.9,
-        img: "assets/KaoMooDang.jpg"),
-    DishList(
-        name: "Kao Moo Kratiam",
-        calories: 343,
-        carbo: 46,
-        fat: 3,
-        protein: 33,
-        img: "assets/KaoMooKratiam.jpg"),
-    DishList(
-        name: "Kao Pad Kung",
-        calories: 538.1,
-        carbo: 43.4,
-        fat: 24.4,
-        protein: 34.5,
-        img: "assets/KaoPadKung.jpg"),
-    DishList(
-        name: "Yum Woon Sen",
-        calories: 427.3,
-        carbo: 30.4,
-        fat: 17.2,
-        protein: 40.9,
-        img: "assets/YumWoonSen.jpg"),
-  ];
   @override
   Widget build(BuildContext context) {
+    String date = DateFormat("dd-MMM-yyyy").format(DateTime.now());
     if (database.isNotEmpty) {
       print(Uint8List.fromList(database[0]["Image"]["data"].cast<int>()));
     }
@@ -182,10 +173,23 @@ class _DsearchState extends State<Dsearch> {
                               ),
                               context: context,
                               builder: (context) {
-                                return Padding(
+                                return SingleChildScrollView(
+                                  child:Padding(
                                   padding: const EdgeInsets.only(top: 20),
                                   child: Column(
                                     children: [
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                       child: Padding(
+                                        padding: const EdgeInsets.only(right: 20),
+                                       child:IconButton(
+                                        icon: new Image.asset('assets/notepad.jpg', height: 40, width: 40,color: Colors.grey,),
+                                        onPressed: () => addDiary( items[index]["Calories"].toString(), items[index]["FoodNameENG"].toString(), 
+                                          items[index]["FoodNameTH"].toString(), items[index]["Fat"].toString(), items[index]["Carb"].toString(), 
+                                          items[index]["Protein"].toString(), items[index]["Sodium"].toString(), items[index]["Portion"].toString(),
+                                          
+                                        ),
+                                      ),),),
                                       // Dish Name
                                       Center(
                                         child: Container(
@@ -540,6 +544,7 @@ class _DsearchState extends State<Dsearch> {
                                       )
                                     ],
                                   ),
+                                  ),
                                 );
                               });
                         },
@@ -577,17 +582,4 @@ class _DsearchState extends State<Dsearch> {
     super.initState();
     this.getDishData();
   }
-}
-
-class DishList {
-  String name, img;
-  double? calories, fat, carbo, protein;
-
-  DishList(
-      {required this.name,
-      required this.img,
-      this.calories,
-      this.carbo,
-      this.fat,
-      this.protein});
 }
