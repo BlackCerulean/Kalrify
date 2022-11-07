@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../homescreen.dart';
+
 class Dsearch extends StatefulWidget {
   @override
   State<Dsearch> createState() => _DsearchState();
@@ -105,6 +107,13 @@ class _DsearchState extends State<Dsearch> {
     }
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          ),
+        ),
         title: Center(
           child: Text(
             "Search Dish Information",

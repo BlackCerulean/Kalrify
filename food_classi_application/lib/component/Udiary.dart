@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '../homescreen.dart';
 import 'DiaryList.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -21,12 +22,14 @@ class _UdiaryState extends State<Udiary> {
   String dataImage = "";
   List temp = [];
   int num = 0;
-  var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NjM1MDA2fQ.REaJTMWlDkJRqxoR9YrZ2f8zwXE_0_y6kOcTdGFbqWk';
-
+  var token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NjM1MDA2fQ.REaJTMWlDkJRqxoR9YrZ2f8zwXE_0_y6kOcTdGFbqWk';
 
   Future<String> getDiaryData() async {
-    var res =
-        await http.get(Uri.parse(url), headers: {'Content-Type': 'application/json; charset=UTF-8', 'Authorization':'Bearer $token'});
+    var res = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    });
 
     setState(() {
       var resBody = json.decode(res.body);
@@ -67,6 +70,13 @@ class _UdiaryState extends State<Udiary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          ),
+        ),
         title: Center(
           child: Text(
             "User Diary Information",
@@ -175,9 +185,8 @@ class _UdiaryState extends State<Udiary> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               DateFormat("dd MMM yyyy")
-                            .format(DateTime.parse(item["date"]))
-                            .toString()
-              ,
+                  .format(DateTime.parse(item["date"]))
+                  .toString(),
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
             Text(
