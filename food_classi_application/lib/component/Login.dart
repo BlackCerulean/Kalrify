@@ -28,8 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     var resBody = json.decode(res.body);
     
     if(res.statusCode == 200){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         String token = resBody['token'];
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
         print(token);
     } else{
       print('Error');
@@ -232,3 +232,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+// class Token{
+//   final String value;
+
+//   const Token(this.value);
+// }

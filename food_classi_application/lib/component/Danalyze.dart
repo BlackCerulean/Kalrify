@@ -21,14 +21,16 @@ class Danalyze extends StatefulWidget {
 // Image variable
   XFile? image;
   File imgpath;
-  Danalyze({Key? key, @required this.image, required this.imgpath})
+  Danalyze({Key? key, @required this.image, required this.imgpath, required this.token})
       : super(key: key);
-
+      final String token;
   @override
-  State<Danalyze> createState() => _DanalyzeState();
+  State<Danalyze> createState() => _DanalyzeState(token: token);
 }
 
 class _DanalyzeState extends State<Danalyze> {
+  _DanalyzeState({required this.token});
+  final String token;
   bool isLoading = false;
 
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/analyze/getAnalyze';
@@ -57,7 +59,7 @@ class _DanalyzeState extends State<Danalyze> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => HomeScreen(token: token,)),
           ),
         ),
         title: Center(
@@ -144,7 +146,7 @@ class _DanalyzeState extends State<Danalyze> {
           ),
         ],
       ),
-      floatingActionButton: CircularFabWidget(),
+      floatingActionButton: CircularFabWidget(token: token,),
     );
   }
 

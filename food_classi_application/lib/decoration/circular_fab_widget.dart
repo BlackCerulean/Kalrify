@@ -7,12 +7,16 @@ import 'hero_dialog_route.dart';
 final double buttonSize = 70;
 
 class CircularFabWidget extends StatefulWidget {
+  const CircularFabWidget({super.key, required this.token});
+  final String token;
   @override
-  State<CircularFabWidget> createState() => _CircularFabWidgetState();
+  State<CircularFabWidget> createState() => _CircularFabWidgetState(token: token);
 }
 
 class _CircularFabWidgetState extends State<CircularFabWidget>
     with SingleTickerProviderStateMixin {
+      _CircularFabWidgetState({required this.token});
+  final String token;
   late AnimationController controller;
   int count = 0;
 
@@ -72,7 +76,7 @@ class _CircularFabWidgetState extends State<CircularFabWidget>
               }));
             } else if (icon == Icons.add_photo_alternate_outlined) {
               Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                return selectImage();
+                return selectImage(token: token,);
               }));
             } else if (controller.status == AnimationStatus.completed) {
               controller.reverse();

@@ -13,6 +13,8 @@ import 'dart:typed_data';
 // List database = [];
 
 class selectImage extends StatelessWidget {
+  const selectImage({super.key, required this.token});
+  final String token;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -122,6 +124,7 @@ class selectImage extends StatelessWidget {
       return Danalyze(
         image: _image,
         imgpath: File(_image!.path),
+        token: token,
       );
     }));
     // debugPrint(_image.toString());
