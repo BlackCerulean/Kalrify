@@ -1,30 +1,38 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../homescreen.dart';
-import 'DiaryList.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Udiary extends StatefulWidget {
+  const Udiary({super.key, required this.token});
+  final String token;
   @override
-  State<Udiary> createState() => _UdiaryState();
+  State<Udiary> createState() => _UdiaryState(token: token);
 }
 
 class _UdiaryState extends State<Udiary> {
+  _UdiaryState({required this.token});
+  final String token;
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/diary/getDiary';
   final String img = 'http://kalrify.sit.kmutt.ac.th:3000/image/getImage';
+  final String profile = 'http://kalrify.sit.kmutt.ac.th:3000/user/getProfile';
+  final String totalCal =
+      'http://kalrify.sit.kmutt.ac.th:3000/diary/getTotalcal';
   List database = [];
   List<int> dataimageList = [];
   String dataImage = "";
   List temp = [];
   int num = 0;
-  var token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NjM1MDA2fQ.REaJTMWlDkJRqxoR9YrZ2f8zwXE_0_y6kOcTdGFbqWk';
-
+  List profileData = [];
+  List totalcalData = [];
+  int maxCal = 0;
+  int eatCal = 0;
   Future<String> getDiaryData() async {
     var res = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -33,7 +41,7 @@ class _UdiaryState extends State<Udiary> {
 
     setState(() {
       var resBody = json.decode(res.body);
-      print(resBody);
+      // print(resBody);
       database = resBody["diary"];
       database = database.reversed.toList();
     });
@@ -42,7 +50,7 @@ class _UdiaryState extends State<Udiary> {
   }
 
   Future<String> getImage(foodImage) async {
-    print(foodImage);
+    // print(foodImage);
     var res = await http.get(
       Uri.parse(img),
       headers: {"Accept": "application/json", "food": foodImage.toString()},
@@ -63,110 +71,196 @@ class _UdiaryState extends State<Udiary> {
     return "Success!";
   }
 
-  bool _showData = false;
-  int maxCal = 2000;
-  int eatCal = 1600;
+  Future<String> getProfileData() async {
+    var res = await http.get(Uri.parse(profile), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    });
+    print('Get Profile');
+    print(json.decode(res.body));
+
+    var resBody = json.decode(res.body);
+    // print(resBody);
+    profileData = resBody["user"];
+
+    return "Success!";
+  }
+
+  Future<String> getTotalCalData() async {
+    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
+    var res = await http.get(
+      Uri.parse(totalCal),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+        'date': date,
+      },
+    );
+    print('Get Total');
+    print(json.decode(res.body));
+
+    var resBody = json.decode(res.body);
+    // print(resBody);
+    totalcalData = resBody["diary"];
+    eatCal = totalcalData[0]["totalCal"];
+
+    return "Success!";
+  }
+
+  // bool _showData = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          ),
-        ),
-        title: Center(
-          child: Text(
-            "User Diary Information",
-            style: TextStyle(
-              fontSize: 19,
-            ),
-          ),
-        ),
-        backgroundColor: Color(0xFF8cb369),
-      ),
-      body: Center(
-        child: ListView(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Container(
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    "Date: " +
-                        DateFormat("dd MMMM yyyy")
-                            .format(DateTime.now())
-                            .toString(),
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom:
-                          BorderSide(color: Color.fromRGBO(255, 170, 90, 1)))),
-              child: new CircularPercentIndicator(
-                radius: 100.0,
-                animation: true,
-                animationDuration: 1200,
-                lineWidth: 15.0,
-                percent: eatCal / maxCal,
-                center: new Text(
-                  (maxCal - eatCal).toString() + " Kcal left",
-                  style: new TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20.0,
-                      color: Color.fromRGBO(228, 87, 46, 1)),
-                ),
-                footer: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(children: [
-                    new Text(
-                      "Max calories per day: ",
-                      style: new TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17.0,
-                          color: Color.fromRGBO(228, 87, 46, 1)),
-                    ),
-                    new Text(
-                      eatCal.toString() + "/" + maxCal.toString() + " Kcal",
-                      style: new TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17.0,
-                          color: Colors.grey),
-                    ),
-                  ]),
-                ),
-                circularStrokeCap: CircularStrokeCap.butt,
-                backgroundColor: Color.fromARGB(226, 140, 179, 105),
-                progressColor: Color.fromARGB(248, 228, 88, 46),
-              ),
-            ),
-          ),
-          // DiaryList(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0.0),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: database.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildPlayerModelList(database[index]);
-              },
-            ),
-          ),
-        ]),
-      ),
-    );
+    return FutureBuilder(
+        future: getTotalCalData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return FutureBuilder(
+                future: getProfileData(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    if (profileData[0]["gender"] == "male") {
+                      print('male');
+                      maxCal = (66.47 +
+                              (13.75 * profileData[0]["weight"]) +
+                              (5.003 * profileData[0]["height"]) -
+                              (6.755 * profileData[0]["age"]))
+                          .toInt();
+                    } else {
+                      print('female');
+                      maxCal = (655.1 +
+                              (9.563 * profileData[0]["weight"]) +
+                              (1.850 * profileData[0]["height"]) -
+                              (4.676 * profileData[0]["age"]))
+                          .toInt();
+                    }
+
+                    double percentCal = eatCal.toDouble() / maxCal.toDouble();
+                    String remainCal =
+                        (maxCal - eatCal).toString() + " Kcal left";
+                    if (percentCal > 1) {
+                      percentCal = 1.0;
+                      remainCal = "No calories left";
+                    }
+
+                    return Scaffold(
+                      appBar: AppBar(
+                        leading: IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen(token: token)),
+                          ),
+                        ),
+                        title: Center(
+                          child: Text(
+                            "User Diary Information",
+                            style: TextStyle(
+                              fontSize: 19,
+                            ),
+                          ),
+                        ),
+                        backgroundColor: Color(0xFF8cb369),
+                      ),
+                      body: Center(
+                        child: ListView(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(
+                              child: Container(
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Text(
+                                    "Date: " +
+                                        DateFormat("dd MMMM yyyy")
+                                            .format(DateTime.now())
+                                            .toString(),
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Color.fromRGBO(
+                                              255, 170, 90, 1)))),
+                              child: new CircularPercentIndicator(
+                                radius: 100.0,
+                                animation: true,
+                                animationDuration: 1200,
+                                lineWidth: 15.0,
+                                percent: percentCal,
+                                center: new Text(
+                                  remainCal,
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20.0,
+                                      color: Color.fromRGBO(228, 87, 46, 1)),
+                                ),
+                                footer: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(children: [
+                                    new Text(
+                                      "Max calories per day: ",
+                                      style: new TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17.0,
+                                          color:
+                                              Color.fromRGBO(228, 87, 46, 1)),
+                                    ),
+                                    new Text(
+                                      eatCal.toString() +
+                                          "/" +
+                                          maxCal.toString() +
+                                          " Kcal",
+                                      style: new TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17.0,
+                                          color: Colors.grey),
+                                    ),
+                                  ]),
+                                ),
+                                circularStrokeCap: CircularStrokeCap.butt,
+                                backgroundColor:
+                                    Color.fromARGB(226, 140, 179, 105),
+                                progressColor: Color.fromARGB(248, 228, 88, 46),
+                              ),
+                            ),
+                          ),
+                          // DiaryList(),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              itemCount: database.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return _buildPlayerModelList(database[index]);
+                              },
+                            ),
+                          ),
+                        ]),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                });
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   Widget _buildPlayerModelList(item) {

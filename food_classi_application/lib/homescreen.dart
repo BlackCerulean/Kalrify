@@ -7,6 +7,9 @@ import 'package:food_classi_application/component/Danalyze.dart';
 import 'package:food_classi_application/component/Udiary.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key, required this.token});
+  final String token;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return Dsearch();
+                    return Dsearch(token: token,);
                   }));
                 },
                 heroTag: 'DSearch',
@@ -154,7 +157,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return Udiary();
+                    return Udiary(token: token,);
                   }));
                 },
                 heroTag: 'Udiary',
@@ -186,6 +189,7 @@ class HomeScreen extends StatelessWidget {
       return Danalyze(
         image: _image,
         imgpath: File(_image!.path),
+        token: token,
       );
     }));
     // debugPrint(_image.toString());

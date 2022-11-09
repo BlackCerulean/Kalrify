@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_classi_application/component/Udiary.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -8,23 +9,35 @@ import 'package:intl/intl.dart';
 import '../homescreen.dart';
 
 class Dsearch extends StatefulWidget {
+  const Dsearch({super.key, required this.token});
+
+  final String token;
+
   @override
-  State<Dsearch> createState() => _DsearchState();
+  State<Dsearch> createState() => _DsearchState(token: token);
 }
 
 class _DsearchState extends State<Dsearch> {
-  final TextEditingController searchController = TextEditingController();
-  bool isExecuted = false;
-  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/dish/getDish';
+  _DsearchState({required this.token});
+
   final String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
   List database = [];
-  List items = [];
-  var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NjM1MDA2fQ.REaJTMWlDkJRqxoR9YrZ2f8zwXE_0_y6kOcTdGFbqWk';
+  bool isExecuted = false;
+  List items = [];  
+  final TextEditingController searchController = TextEditingController();
+  final String token;
+  final String url = 'http://kalrify.sit.kmutt.ac.th:3000/dish/getDish';
 
-  
-
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    searchController.dispose();
+    super.dispose();
+  }
 
   Future<String> getDishData() async {
+    print('search: '+token);
     var res =
         await http.get(Uri.parse(url), headers: {'Content-Type': 'application/json; charset=UTF-8', 'Authorization':'Bearer $token'});
 
@@ -59,7 +72,7 @@ class _DsearchState extends State<Dsearch> {
     print(res.statusCode);
     
     if(res.statusCode == 200){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Dsearch()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Udiary(token: token,)));
     } else{
       print('Error');
     }
@@ -77,7 +90,7 @@ class _DsearchState extends State<Dsearch> {
           dummyListData.add(database[i]);
         }
       }
-      ;
+      // ;
       setState(() {
         items.clear();
         items.addAll(dummyListData);
@@ -92,13 +105,11 @@ class _DsearchState extends State<Dsearch> {
     }
   }
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
-    searchController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    this.getDishData();
   }
+
   @override
   Widget build(BuildContext context) {
     String date = DateFormat("dd-MMM-yyyy").format(DateTime.now());
@@ -111,7 +122,7 @@ class _DsearchState extends State<Dsearch> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => HomeScreen(token:token)),
           ),
         ),
         title: Center(
@@ -585,10 +596,5 @@ class _DsearchState extends State<Dsearch> {
         ),
       ),
     );
-  }
-
-  void initState() {
-    super.initState();
-    this.getDishData();
   }
 }

@@ -15,11 +15,15 @@ String txt = "";
 String txt1 = "Upload or take an image of Thai Food";
 
 class Dupload extends StatefulWidget {
+  const Dupload({super.key, required this.token});
+  final String token;
   @override
-  _DuploadState createState() => _DuploadState();
+  _DuploadState createState() => _DuploadState(token: token);
 }
 
 class _DuploadState extends State<Dupload> {
+  _DuploadState({required this.token});
+  final String token;
   Map<String, dynamic>? _outputs;
   XFile? _image;
   bool _loading = false;
