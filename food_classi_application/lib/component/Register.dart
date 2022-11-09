@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_classi_application/component/Login.dart';
@@ -13,6 +11,10 @@ class RegisScreen extends StatefulWidget {
   _RegisScreenState createState() => _RegisScreenState();
 }
 
+String? _gender = '';
+final genderController = TextEditingController();
+
+
 class _RegisScreenState extends State<RegisScreen> {
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/auth/register';
   TextEditingController username = TextEditingController();
@@ -20,26 +22,37 @@ class _RegisScreenState extends State<RegisScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController height = TextEditingController();
   TextEditingController weight = TextEditingController();
-  
-  Future regis() async{
+  TextEditingController age = TextEditingController();
+
+  void checkRadio(String value ) {
+      setState(() {
+        _gender = value;
+      });
+    }
+
+  Future regis() async {
     var res = await http.post(Uri.parse(url), body: {
-      "username": username.text, 
-      "password": password.text, 
-      "email": email.text, 
-      "weight": weight.text, 
+      "username": username.text,
+      "password": password.text,
+      "email": email.text,
+      "weight": weight.text,
       "height": height.text,
+      "age": age.text,
+      "gender": _gender
     });
     var resBody = json.decode(res.body);
-    
-    if(res.statusCode == 200){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-        String token = resBody['token'];
-        print(token);
-    } else{
+
+    if (res.statusCode == 200) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      String token = resBody['token'];
+      print(token);
+    } else {
       print('Error');
     }
-      return "Success!";
-    }
+    return "Success!";
+  }
+
   Widget _buildUserTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +78,7 @@ class _RegisScreenState extends State<RegisScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.person,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Username',
               hintStyle: kHintTextStyle,
@@ -101,7 +114,7 @@ class _RegisScreenState extends State<RegisScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Email Address',
               hintStyle: kHintTextStyle,
@@ -137,7 +150,7 @@ class _RegisScreenState extends State<RegisScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -173,7 +186,7 @@ class _RegisScreenState extends State<RegisScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.height,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Height',
               hintStyle: kHintTextStyle,
@@ -184,7 +197,7 @@ class _RegisScreenState extends State<RegisScreen> {
     );
   }
 
-   Widget _buildWeightTF() {
+  Widget _buildWeightTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -209,7 +222,7 @@ class _RegisScreenState extends State<RegisScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.scale,
-                color: Color.fromRGBO(255, 120, 90,1),
+                color: Color.fromRGBO(255, 120, 90, 1),
               ),
               hintText: 'Enter your Weight',
               hintStyle: kHintTextStyle,
@@ -220,19 +233,91 @@ class _RegisScreenState extends State<RegisScreen> {
     );
   }
 
+  Widget _buildAgeTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Age',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: age,
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.calendar_month_outlined,
+                color: Color.fromRGBO(255, 120, 90, 1),
+              ),
+              hintText: 'Enter your Age',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRadionBtn(){
+    
+    return Container(
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Gender',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+      RadioListTile(
+          title: Text("Male"),
+          value: 'male', 
+          groupValue: _gender, 
+          onChanged: (value){
+            setState(() {
+                checkRadio(value as String);
+            });
+          },
+      ),
+      RadioListTile(
+          title: Text("Female"),
+          value: 'female',
+          groupValue: _gender, 
+          onChanged: (value){
+            setState(() {
+                checkRadio(value as String);
+            });
+          },
+      ),
+    ]
+    )
+  );
+}
+
   Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-        elevation: 5.0,
-        backgroundColor: Color.fromRGBO(140, 179, 105,1),
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+          elevation: 5.0,
+          backgroundColor: Color.fromRGBO(140, 179, 105, 1),
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
         ),
-      ),
         onPressed: () => regis(),
         child: Text(
           'Sign Up',
@@ -247,11 +332,12 @@ class _RegisScreenState extends State<RegisScreen> {
       ),
     );
   }
-
+  
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen())),
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => LoginScreen())),
       child: RichText(
         text: TextSpan(
           children: [
@@ -270,14 +356,13 @@ class _RegisScreenState extends State<RegisScreen> {
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
-
             ),
           ],
         ),
       ),
     );
   }
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -291,8 +376,7 @@ class _RegisScreenState extends State<RegisScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                ),
+                decoration: BoxDecoration(),
               ),
               Container(
                 height: double.infinity,
@@ -320,21 +404,29 @@ class _RegisScreenState extends State<RegisScreen> {
                         height: 20.0,
                       ),
                       _buildPasswordTF(),
-                       SizedBox(
+                      SizedBox(
                         height: 20.0,
                       ),
                       _buildEmailTF(),
-                       SizedBox(
-                        height: 20.0,
-                      ),
-                       _buildHeightTF(),
                       SizedBox(
                         height: 20.0,
-                      ), 
+                      ),
+                      _buildRadionBtn(),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      _buildAgeTF(),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      _buildHeightTF(),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       _buildWeightTF(),
                       SizedBox(
                         height: 20.0,
-                      ),     
+                      ),
                       _buildLoginBtn(),
                       _buildSignupBtn(),
                     ],
@@ -348,4 +440,3 @@ class _RegisScreenState extends State<RegisScreen> {
     );
   }
 }
-
