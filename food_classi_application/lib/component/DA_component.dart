@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'Danalyze.dart';
 import 'dart:typed_data';
-// import 'dart:async';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 // List database = [];
 
@@ -567,9 +568,11 @@ class addDiary extends StatefulWidget {
   String year;
   String hour;
   int minute;
+  String token;
 
   addDiary({
     Key? key,
+    required this.token,
     required this.day,
     required this.month,
     required this.year,
@@ -578,10 +581,32 @@ class addDiary extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<addDiary> createState() => _addDiaryState();
+  State<addDiary> createState() => _addDiaryState(token: token);
 }
 
 class _addDiaryState extends State<addDiary> {
+  _addDiaryState({required this.token});
+  String token;
+  String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
+    Future addDiary(
+      cal, engName, thName, fat, carb, protein, sodium, portion) async {
+    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
+    var res = await http.post(
+      Uri.parse(addUrl),
+      headers: <String, String>{'Authorization': 'Bearer $token'},
+      body: {
+        "date_Now": date,
+        "total_Cal": cal,
+        "FoodNameENG": engName,
+        "FoodNameTH": thName,
+        "Fat": fat,
+        "Carb": carb,
+        "Protein": protein,
+        "Sodium": sodium,
+        "Portion": portion,
+      },
+    );
+      }
   // bool isExecuted = false;
   @override
   Widget build(BuildContext context) {
@@ -919,7 +944,17 @@ class _addDiaryState extends State<addDiary> {
                                         borderRadius:
                                             new BorderRadius.circular(20.0),
                                       ),
-                                      onPressed: (() {}),
+                                      onPressed: () => addDiary(
+                                              database[0]["Calories"].toString(),
+                                              database[0]["FoodNameENG"].toString(),
+                                              database[0]["FoodNameTH"].toString(),
+                                              database[0]["Fat"].toString(),
+                                              database[0]["Carb"].toString(),
+                                              database[0]["Protein"].toString(),
+                                              database[0]["Sodium"].toString(),
+                                              database[0]["Portion"].toString(),
+                                            
+                                      ),
                                       heroTag: null,
                                     ),
                                   ),

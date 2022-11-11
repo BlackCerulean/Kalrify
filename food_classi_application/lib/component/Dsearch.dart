@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_classi_application/component/Udiary.dart';
+import 'package:food_classi_application/component/AddDiary.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../decoration/hero_dialog_route.dart';
 import '../homescreen.dart';
 
 class Dsearch extends StatefulWidget {
@@ -23,7 +25,7 @@ class _DsearchState extends State<Dsearch> {
   final String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
   List database = [];
   bool isExecuted = false;
-  List items = [];  
+  List items = [];
   final TextEditingController searchController = TextEditingController();
   final String token;
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/dish/getDish';
@@ -37,9 +39,11 @@ class _DsearchState extends State<Dsearch> {
   }
 
   Future<String> getDishData() async {
-    print('search: '+token);
-    var res =
-        await http.get(Uri.parse(url), headers: {'Content-Type': 'application/json; charset=UTF-8', 'Authorization':'Bearer $token'});
+    print('search: ' + token);
+    var res = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    });
 
     setState(() {
       var resBody = json.decode(res.body);
@@ -50,34 +54,38 @@ class _DsearchState extends State<Dsearch> {
     return "Success!";
   }
 
-    Future addDiary( cal, engName, thName, fat, carb, protein, sodium, portion) async{
-      var date = DateFormat("yyyy-MM-dd")
-                            .format(DateTime.now())
-                            .toString();
-    var res = await http.post(Uri.parse(addUrl), 
-    headers:<String, String>{
-     'Authorization':'Bearer $token'},
-    body: {
-      "date_Now": date,
-      "total_Cal": cal,
-      "FoodNameENG":engName,                                      
-      "FoodNameTH":thName, 
-      "Fat":fat, 
-      "Carb":carb, 
-      "Protein":protein, 
-      "Sodium":sodium, 
-      "Portion":portion,
-    },
+  Future addDiary(
+      cal, engName, thName, fat, carb, protein, sodium, portion) async {
+    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
+    var res = await http.post(
+      Uri.parse(addUrl),
+      headers: <String, String>{'Authorization': 'Bearer $token'},
+      body: {
+        "date_Now": date,
+        "total_Cal": cal,
+        "FoodNameENG": engName,
+        "FoodNameTH": thName,
+        "Fat": fat,
+        "Carb": carb,
+        "Protein": protein,
+        "Sodium": sodium,
+        "Portion": portion,
+      },
     );
     print(res.statusCode);
-    
-    if(res.statusCode == 200){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Udiary(token: token,)));
-    } else{
+
+    if (res.statusCode == 200) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Udiary(
+                    token: token,
+                  )));
+    } else {
       print('Error');
     }
-      return "Success!";
-    }
+    return "Success!";
+  }
 
   void filterSearchResults(String query) {
     List dummySearchList = [];
@@ -112,7 +120,7 @@ class _DsearchState extends State<Dsearch> {
 
   @override
   Widget build(BuildContext context) {
-    String date = DateFormat("dd-MMM-yyyy").format(DateTime.now());
+    var date = DateTime.now();
     if (database.isNotEmpty) {
       print(Uint8List.fromList(database[0]["Image"]["data"].cast<int>()));
     }
@@ -122,7 +130,7 @@ class _DsearchState extends State<Dsearch> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen(token:token)),
+            MaterialPageRoute(builder: (context) => HomeScreen(token: token)),
           ),
         ),
         title: Center(
@@ -194,376 +202,411 @@ class _DsearchState extends State<Dsearch> {
                               context: context,
                               builder: (context) {
                                 return SingleChildScrollView(
-                                  child:Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topRight,
-                                       child: Padding(
-                                        padding: const EdgeInsets.only(right: 20),
-                                       child:IconButton(
-                                        icon: new Image.asset('assets/notepad.jpg', height: 40, width: 40,color: Colors.grey,),
-                                        onPressed: () => addDiary( items[index]["Calories"].toString(), items[index]["FoodNameENG"].toString(), 
-                                          items[index]["FoodNameTH"].toString(), items[index]["Fat"].toString(), items[index]["Carb"].toString(), 
-                                          items[index]["Protein"].toString(), items[index]["Sodium"].toString(), items[index]["Portion"].toString(),
-                                          
-                                        ),
-                                      ),),),
-                                      // Dish Name
-                                      Center(
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 10),
-                                          child: Center(
-                                            child: Text(
-                                              items[index]["FoodNameENG"] +
-                                                  "(" +
-                                                  items[index]["FoodNameTH"] +
-                                                  ")",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color.fromRGBO(
-                                                      228, 87, 46, 1)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Column(
+                                      children: [
+                                        // Align(
+                                        //   alignment: Alignment.topRight,
+                                        //  child: Padding(
+                                        //   padding: const EdgeInsets.only(right: 20),
+                                        //  child:IconButton(
+                                        //   icon: new Image.asset('assets/notepad.jpg', height: 40, width: 40,color: Colors.grey,),
+                                        //   onPressed: () => addDiary( items[index]["Calories"].toString(), items[index]["FoodNameENG"].toString(),
+                                        //     items[index]["FoodNameTH"].toString(), items[index]["Fat"].toString(), items[index]["Carb"].toString(),
+                                        //     items[index]["Protein"].toString(), items[index]["Sodium"].toString(), items[index]["Portion"].toString(),
+
+                                        //   ),
+                                        // ),),),
+                                        // Dish Name
+                                        Center(
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            child: Center(
+                                              child: Text(
+                                                items[index]["FoodNameENG"] +
+                                                    "(" +
+                                                    items[index]["FoodNameTH"] +
+                                                    ")",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Color.fromRGBO(
+                                                        228, 87, 46, 1)),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      // Dish Image
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
-                                        child: new Image.memory(
-                                            Uint8List.fromList(items[index]
-                                                    ["Image"]["data"]
-                                                .cast<int>())),
-                                      ),
-                                      // Calories
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                            child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border(
-                                                        bottom: BorderSide(
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    255,
-                                                                    170,
-                                                                    90,
-                                                                    1)))),
-                                                child: Column(children: [
-                                                  Container(
-                                                    child: Text(
-                                                      "Energy",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.grey),
+                                        // Dish Image
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          child: new Image.memory(
+                                              Uint8List.fromList(items[index]
+                                                      ["Image"]["data"]
+                                                  .cast<int>())),
+                                        ),
+                                        // Calories
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                              child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border(
+                                                          bottom: BorderSide(
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      255,
+                                                                      170,
+                                                                      90,
+                                                                      1)))),
+                                                  child: Column(children: [
+                                                    Container(
+                                                      child: Text(
+                                                        "Energy",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: Colors.grey),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          10,
-                                                                      vertical:
-                                                                          10),
-                                                              child: Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Calories per dish: ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color.fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                                  ),
-                                                                  Text(
-                                                                    items[index]["Calories"]
-                                                                            .toString() +
-                                                                        " (Kcal) ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color.fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                                  ),
-                                                                ],
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 5),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                        vertical:
+                                                                            10),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      "Calories per dish: ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Color.fromRGBO(
+                                                                              228,
+                                                                              87,
+                                                                              46,
+                                                                              1)),
+                                                                    ),
+                                                                    Text(
+                                                                      items[index]["Calories"]
+                                                                              .toString() +
+                                                                          " (Kcal) ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Color.fromRGBO(
+                                                                              140,
+                                                                              179,
+                                                                              105,
+                                                                              1)),
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          10,
-                                                                      vertical:
-                                                                          10),
-                                                              child: Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "Portion: ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color.fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                                  ),
-                                                                  Text(
-                                                                    items[index]["Portion"]
-                                                                            .toString() +
-                                                                        " (Serving) ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color.fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                                  ),
-                                                                ],
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                        vertical:
+                                                                            10),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      "Portion: ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Color.fromRGBO(
+                                                                              228,
+                                                                              87,
+                                                                              46,
+                                                                              1)),
+                                                                    ),
+                                                                    Text(
+                                                                      items[index]["Portion"]
+                                                                              .toString() +
+                                                                          " (Serving) ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Color.fromRGBO(
+                                                                              140,
+                                                                              179,
+                                                                              105,
+                                                                              1)),
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ]),
-                                              ),
-                                            ),
-                                            // Nutrients
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10),
-                                              child: Container(
-                                                child: Text(
-                                                  "Nutritions",
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.grey),
+                                                  ]),
                                                 ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 20,
-                                                vertical: 5,
-                                              ),
-                                              child: Center(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    // Nutrition Column 1
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                "Fat: ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                              ),
-                                                              Text(
-                                                                items[index][
-                                                                            "Fat"]
-                                                                        .toString() +
-                                                                    " (g.)",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                "Carbohydrate: ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                              ),
-                                                              Text(
-                                                                items[index][
-                                                                            "Carb"]
-                                                                        .toString() +
-                                                                    " (g.)",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    // Nutrition Column 2
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                "Fat: ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                              ),
-                                                              Text(
-                                                                items[index][
-                                                                            "Sodium"]
-                                                                        .toString() +
-                                                                    " (mg.)",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10,
-                                                                  vertical: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Text(
-                                                                "Protein: ",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            228,
-                                                                            87,
-                                                                            46,
-                                                                            1)),
-                                                              ),
-                                                              Text(
-                                                                items[index][
-                                                                            "Protein"]
-                                                                        .toString() +
-                                                                    " (g.)",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            140,
-                                                                            179,
-                                                                            105,
-                                                                            1)),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
+                                              // Nutrients
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: Container(
+                                                  child: Text(
+                                                    "Nutritions",
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.grey),
+                                                  ),
                                                 ),
                                               ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 20,
+                                                  vertical: 5,
+                                                ),
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      // Nutrition Column 1
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                    vertical:
+                                                                        10),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Fat: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
+                                                                ),
+                                                                Text(
+                                                                  items[index][
+                                                                              "Fat"]
+                                                                          .toString() +
+                                                                      " (g.)",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                    vertical:
+                                                                        10),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Carbohydrate: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
+                                                                ),
+                                                                Text(
+                                                                  items[index][
+                                                                              "Carb"]
+                                                                          .toString() +
+                                                                      " (g.)",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      // Nutrition Column 2
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                    vertical:
+                                                                        10),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Fat: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
+                                                                ),
+                                                                Text(
+                                                                  items[index][
+                                                                              "Sodium"]
+                                                                          .toString() +
+                                                                      " (mg.)",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                    vertical:
+                                                                        10),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Protein: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          228,
+                                                                          87,
+                                                                          46,
+                                                                          1)),
+                                                                ),
+                                                                Text(
+                                                                  items[index][
+                                                                              "Protein"]
+                                                                          .toString() +
+                                                                      " (g.)",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Color.fromRGBO(
+                                                                          140,
+                                                                          179,
+                                                                          105,
+                                                                          1)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 8, 0, 20),
+                                          child: FloatingActionButton.extended(
+                                            label: Text(
+                                                'Add to Diary'), // <-- Text
+                                            backgroundColor: Color(0xFF8cb369),
+                                            icon: Icon(
+                                              // <-- Icon
+                                              Icons.note_alt,
+                                              size: 24.0,
                                             ),
-                                          ],
-                                        )),
-                                      )
-                                    ],
-                                  ),
+                                            onPressed: () {
+                                              print("data: ");
+                                              print(items[index]);
+                                              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                return AddDiary(cal: items[index]["Calories"]
+                                                  .toString(),
+                                                  engName: items[index]["FoodNameENG"]
+                                                  .toString(),
+                                              thaiName: items[index]["FoodNameTH"]
+                                                  .toString(),
+                                              fat: items[index]["Fat"].toString(),
+                                              carb: items[index]["Carb"].toString(),
+                                              protein: items[index]["Protein"]
+                                                  .toString(),
+                                              sodium:items[index]["Sodium"].toString(),
+                                              portion:items[index]["Portion"]
+                                                  .toString(),
+                                              day: date.day.toString(),
+                                            month: date.month.toString(),
+                                            year: date.year.toString(),
+                                            hour: date.hour.toString(),
+                                            minute: date.minute,token: token,);
+                                            }));},
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               });

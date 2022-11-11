@@ -24,6 +24,8 @@ class _UdiaryState extends State<Udiary> {
   final String profile = 'http://kalrify.sit.kmutt.ac.th:3000/user/getProfile';
   final String totalCal =
       'http://kalrify.sit.kmutt.ac.th:3000/diary/getTotalcal';
+  final String delDiary = 'http://kalrify.sit.kmutt.ac.th:3000/diary/delDiary';
+
   List database = [];
   List<int> dataimageList = [];
   String dataImage = "";
@@ -104,6 +106,35 @@ class _UdiaryState extends State<Udiary> {
     totalcalData = resBody["diary"];
     eatCal = totalcalData[0]["totalCal"];
 
+    return "Success!";
+  }
+
+  Future<String> delDish(id, index, cal) async{
+
+    print(id);
+    print(index);
+    print(cal);
+    var res = await http.post(
+      Uri.parse(delDiary),
+      headers: <String, String>{'Authorization': 'Bearer $token'},
+      body: {
+        "dishID": id.toString(),
+        "dishIndex": index.toString(),
+        "cal":cal.toString()
+      },
+    );
+    print(res.statusCode);
+
+    if (res.statusCode == 200) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Udiary(
+                    token: token,
+                  )));
+    } else {
+      print('Error');
+    }
     return "Success!";
   }
 
@@ -320,7 +351,8 @@ class _UdiaryState extends State<Udiary> {
                                       ),
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
+                                        return SingleChildScrollView(
+                                        child:Padding(
                                           padding:
                                               const EdgeInsets.only(top: 20),
                                           child: Column(
@@ -634,12 +666,27 @@ class _UdiaryState extends State<Udiary> {
                                                         ),
                                                       ),
                                                     ),
+                                                    Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 8, 0, 20),
+                                          child: FloatingActionButton.extended(
+                                            label: Text(
+                                                'Delete from Diary'), // <-- Text
+                                            backgroundColor: Colors.red,
+                                            icon: Icon(
+                                              // <-- Icon
+                                              Icons.delete,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () => delDish(item["id"], index, dish_list[index]["Calories"]),
+                                          ),
+                                        ),
                                                   ],
                                                 )),
                                               )
                                             ],
                                           ),
-                                        );
+                                        ),);
                                       });
                                 },
                                 child: Container(
