@@ -63,6 +63,7 @@ class _CircularFabWidgetState extends State<CircularFabWidget>
               Navigator.of(context).push(HeroDialogRoute(builder: (context) {
                 var dt = DateTime.now();
                 return addDiary(
+                  token: token,
                   day: dt.day.toString(),
                   month: dt.month.toString(),
                   year: dt.year.toString(),
