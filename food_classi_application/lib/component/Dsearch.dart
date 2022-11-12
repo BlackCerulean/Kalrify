@@ -54,38 +54,6 @@ class _DsearchState extends State<Dsearch> {
     return "Success!";
   }
 
-  Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion) async {
-    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
-    var res = await http.post(
-      Uri.parse(addUrl),
-      headers: <String, String>{'Authorization': 'Bearer $token'},
-      body: {
-        "date_Now": date,
-        "total_Cal": cal,
-        "FoodNameENG": engName,
-        "FoodNameTH": thName,
-        "Fat": fat,
-        "Carb": carb,
-        "Protein": protein,
-        "Sodium": sodium,
-        "Portion": portion,
-      },
-    );
-    print(res.statusCode);
-
-    if (res.statusCode == 200) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Udiary(
-                    token: token,
-                  )));
-    } else {
-      print('Error');
-    }
-    return "Success!";
-  }
 
   void filterSearchResults(String query) {
     List dummySearchList = [];
@@ -120,7 +88,6 @@ class _DsearchState extends State<Dsearch> {
 
   @override
   Widget build(BuildContext context) {
-    var date = DateTime.now();
     if (database.isNotEmpty) {
       print(Uint8List.fromList(database[0]["Image"]["data"].cast<int>()));
     }
@@ -206,18 +173,6 @@ class _DsearchState extends State<Dsearch> {
                                     padding: const EdgeInsets.only(top: 20),
                                     child: Column(
                                       children: [
-                                        // Align(
-                                        //   alignment: Alignment.topRight,
-                                        //  child: Padding(
-                                        //   padding: const EdgeInsets.only(right: 20),
-                                        //  child:IconButton(
-                                        //   icon: new Image.asset('assets/notepad.jpg', height: 40, width: 40,color: Colors.grey,),
-                                        //   onPressed: () => addDiary( items[index]["Calories"].toString(), items[index]["FoodNameENG"].toString(),
-                                        //     items[index]["FoodNameTH"].toString(), items[index]["Fat"].toString(), items[index]["Carb"].toString(),
-                                        //     items[index]["Protein"].toString(), items[index]["Sodium"].toString(), items[index]["Portion"].toString(),
-
-                                        //   ),
-                                        // ),),),
                                         // Dish Name
                                         Center(
                                           child: Container(
@@ -584,7 +539,7 @@ class _DsearchState extends State<Dsearch> {
                                               print("data: ");
                                               print(items[index]);
                                               Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                return AddDiary(cal: items[index]["Calories"]
+                                              return AddDiary(cal: items[index]["Calories"]
                                                   .toString(),
                                                   engName: items[index]["FoodNameENG"]
                                                   .toString(),
@@ -597,11 +552,7 @@ class _DsearchState extends State<Dsearch> {
                                               sodium:items[index]["Sodium"].toString(),
                                               portion:items[index]["Portion"]
                                                   .toString(),
-                                              day: date.day.toString(),
-                                            month: date.month.toString(),
-                                            year: date.year.toString(),
-                                            hour: date.hour.toString(),
-                                            minute: date.minute,token: token,);
+                                                  token: token,);
                                             }));},
                                           ),
                                         ),
