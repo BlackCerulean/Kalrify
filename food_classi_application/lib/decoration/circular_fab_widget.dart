@@ -61,14 +61,8 @@ class _CircularFabWidgetState extends State<CircularFabWidget>
           onPressed: () {
             if (icon == Icons.bookmark_add_outlined) {
               Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                var dt = DateTime.now();
                 return addDiary(
                   token: token,
-                  day: dt.day.toString(),
-                  month: dt.month.toString(),
-                  year: dt.year.toString(),
-                  hour: dt.hour.toString(),
-                  minute: dt.minute,
                 );
               }));
             } else if (icon == Icons.analytics_outlined) {

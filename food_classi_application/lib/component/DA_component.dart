@@ -11,6 +11,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'Udiary.dart';
+
 // List database = [];
 
 class selectImage extends StatelessWidget {
@@ -563,21 +565,11 @@ class FormDiary {
 FormDiary _formDiary = FormDiary();
 
 class addDiary extends StatefulWidget {
-  String day;
-  String month;
-  String year;
-  String hour;
-  int minute;
   String token;
 
   addDiary({
     Key? key,
     required this.token,
-    required this.day,
-    required this.month,
-    required this.year,
-    required this.hour,
-    required this.minute,
   }) : super(key: key);
 
   @override
@@ -588,9 +580,15 @@ class _addDiaryState extends State<addDiary> {
   _addDiaryState({required this.token});
   String token;
   String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
+  TextEditingController dateController = TextEditingController();
+  @override
+  void initState(){
+    super.initState();
+    dateController.text = "";
+  }
+
     Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion) async {
-    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
+      cal, engName, thName, fat, carb, protein, sodium, portion, date) async {
     var res = await http.post(
       Uri.parse(addUrl),
       headers: <String, String>{'Authorization': 'Bearer $token'},
@@ -606,6 +604,16 @@ class _addDiaryState extends State<addDiary> {
         "Portion": portion,
       },
     );
+    if (res.statusCode == 200) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Udiary(
+                    token: token,
+                  )));
+    } else {
+      print('Error');
+    }
       }
   // bool isExecuted = false;
   @override
@@ -734,105 +742,40 @@ class _addDiaryState extends State<addDiary> {
                                               color: Color(0xffE4572E)),
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.07,
-                                                child: Icon(
-                                                  Icons.calendar_today_outlined,
-                                                  color: Color(0xffE4572E)
-                                                      .withOpacity(.5),
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Text(
-                                              widget.day +
-                                                  '-' +
-                                                  widget.month +
-                                                  '-' +
-                                                  widget.year,
-                                              style: TextStyle(
-                                                  color: Color(0xFFb9b9b9),
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07),
-                                            child: SizedBox(),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.07,
-                                                child: Icon(
-                                                  Icons.access_time,
-                                                  color: Color(0xffE4572E)
-                                                      .withOpacity(.5),
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Text(
-                                              widget.hour +
-                                                  ':' +
-                                                  ((widget.minute <= 9)
-                                                          ? ('0' +
-                                                              widget.minute
-                                                                  .toString())
-                                                          : widget.minute)
-                                                      .toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xFFb9b9b9),
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                      SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child:
+                                      TextField(
+                                        controller: dateController,
+                                        decoration: const InputDecoration(
+                                          icon: Icon(Icons.calendar_today),
+                                          labelText: "Enter Date"
+                                        ),
+                                        readOnly: true,
+                                        onTap: () async{
+                                          DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                       initialDate: DateTime.now(), //get today's date
+                      firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2101)
+                  );
+                  if(pickedDate != null ){
+                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                        //You can format date as per your need
+
+                      setState(() {
+                         dateController.text = formattedDate; //set foratted date to TextField value. 
+                      });
+                  }else{
+                      print("Date is not selected");
+                  }
+                                        },
+                                      ),),
                                       Text(
                                         'Please select your meals type',
                                         style: TextStyle(
@@ -953,6 +896,7 @@ class _addDiaryState extends State<addDiary> {
                                               database[0]["Protein"].toString(),
                                               database[0]["Sodium"].toString(),
                                               database[0]["Portion"].toString(),
+                                              dateController.text
                                             
                                       ),
                                       heroTag: null,

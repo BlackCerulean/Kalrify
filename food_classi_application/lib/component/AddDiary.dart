@@ -22,11 +22,6 @@ class AddDiary extends StatefulWidget {
   String protein;
   String sodium;
   String portion;
-  String day;
-  String month;
-  String year;
-  String hour;
-  int minute;
   String token;
 
   AddDiary({
@@ -40,15 +35,10 @@ class AddDiary extends StatefulWidget {
     required this.protein,
     required this.sodium,
     required this.portion,
-    required this.day,
-    required this.month,
-    required this.year,
-    required this.hour,
-    required this.minute,
   });
 
   @override
-  State<AddDiary> createState() => _AddDiaryState(token: token, cal: cal, carb: carb, engName: engName, thaiName: thaiName, fat: fat, portion: portion, protein: protein, sodium: sodium, day: day, month: month, year: year, hour: hour, minute: minute);
+  State<AddDiary> createState() => _AddDiaryState(token: token, cal: cal, carb: carb, engName: engName, thaiName: thaiName, fat: fat, portion: portion, protein: protein, sodium: sodium);
 }
 
 class _AddDiaryState extends State<AddDiary> {
@@ -61,11 +51,6 @@ class _AddDiaryState extends State<AddDiary> {
     required this.protein,
     required this.sodium,
     required this.portion,
-    required this.day,
-    required this.month,
-    required this.year,
-    required this.hour,
-    required this.minute,
   });
 
   String token;
@@ -77,16 +62,18 @@ class _AddDiaryState extends State<AddDiary> {
   String protein;
   String sodium;
   String portion;
-  String day;
-  String month;
-  String year;
-  String hour;
-  int minute;
+  TextEditingController dateController = TextEditingController();
+  @override
+  void initState(){
+    super.initState();
+    dateController.text = "";
+  }
+
   
    String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
     Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion) async {
-    var date = DateFormat("yyyy-MM-dd").format(DateTime.now()).toString();
+      cal, engName, thName, fat, carb, protein, sodium, portion, date) async {
+        print(date);
     var res = await http.post(
       Uri.parse(addUrl),
       headers: <String, String>{'Authorization': 'Bearer $token'},
@@ -135,7 +122,8 @@ class _AddDiaryState extends State<AddDiary> {
                   borderRadius: BorderRadius.circular(18)),
               child: SingleChildScrollView(
                 child: Container(
-                  child: Column(
+                  child:
+ Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.fromLTRB(
@@ -224,105 +212,41 @@ class _AddDiaryState extends State<AddDiary> {
                                               color: Color(0xffE4572E)),
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.07,
-                                                child: Icon(
-                                                  Icons.calendar_today_outlined,
-                                                  color: Color(0xffE4572E)
-                                                      .withOpacity(.5),
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Text(
-                                              widget.day +
-                                                  '-' +
-                                                  widget.month +
-                                                  '-' +
-                                                  widget.year,
-                                              style: TextStyle(
-                                                  color: Color(0xFFb9b9b9),
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07),
-                                            child: SizedBox(),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.07,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.07,
-                                                child: Icon(
-                                                  Icons.access_time,
-                                                  color: Color(0xffE4572E)
-                                                      .withOpacity(.5),
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.all(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.01),
-                                            child: Text(
-                                              widget.hour +
-                                                  ':' +
-                                                  ((widget.minute <= 9)
-                                                          ? ('0' +
-                                                              widget.minute
-                                                                  .toString())
-                                                          : widget.minute)
-                                                      .toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xFFb9b9b9),
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                      SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child:
+                                      TextField(
+                                        controller: dateController,
+                                        decoration: const InputDecoration(
+                                          icon: Icon(Icons.calendar_today),
+                                          labelText: "Enter Date"
+                                        ),
+                                        readOnly: true,
+                                        onTap: () async{
+                                          DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                       initialDate: DateTime.now(), //get today's date
+                      firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2101)
+                  );
+                  if(pickedDate != null ){
+                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                        //You can format date as per your need
+
+                      setState(() {
+                         dateController.text = formattedDate; //set foratted date to TextField value. 
+                      });
+                  }else{
+                      print("Date is not selected");
+                  }
+                                        },
+                                      ),),
+                                      
                                       Text(
                                         'Please select your meals type',
                                         style: TextStyle(
@@ -443,6 +367,7 @@ class _AddDiaryState extends State<AddDiary> {
                                               protein,
                                               sodium,
                                               portion,
+                                              dateController.text
                                             
                                       ),
                                       heroTag: null,
