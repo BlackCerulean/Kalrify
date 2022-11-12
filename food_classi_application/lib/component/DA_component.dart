@@ -581,14 +581,17 @@ class _addDiaryState extends State<addDiary> {
   String token;
   String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
   TextEditingController dateController = TextEditingController();
+  String meal = "Breakfast";
+
   @override
   void initState(){
     super.initState();
-    dateController.text = "";
+    dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
   }
 
     Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion, date) async {
+      cal, engName, thName, fat, carb, protein, sodium, portion, date, meal) async {
+    print(meal);
     var res = await http.post(
       Uri.parse(addUrl),
       headers: <String, String>{'Authorization': 'Bearer $token'},
@@ -602,6 +605,7 @@ class _addDiaryState extends State<addDiary> {
         "Protein": protein,
         "Sodium": sodium,
         "Portion": portion,
+        "meal":meal,
       },
     );
     if (res.statusCode == 200) {
@@ -618,6 +622,7 @@ class _addDiaryState extends State<addDiary> {
   // bool isExecuted = false;
   @override
   Widget build(BuildContext context) {
+    print(token);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -633,280 +638,244 @@ class _addDiaryState extends State<addDiary> {
                   borderRadius: BorderRadius.circular(18)),
               child: SingleChildScrollView(
                 child: Container(
-                  child: database.isEmpty
-                      ? Padding(
-                          padding: EdgeInsets.all(
-                              MediaQuery.of(context).size.width * 0.02),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: Center(
-                              child: Text(
-                                  'Please tap an "Analyze" button and wait for the result before using this feature',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width * 0.05,
+                            MediaQuery.of(context).size.width * 0.05,
+                            MediaQuery.of(context).size.width * 0.05,
+                            0),
+                        child: Text(
+                          'Add to your diary',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.05,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xffE4572E)),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width * 0.05),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    'Dish Name: ',
+                                    style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
-                                              0.045,
+                                              0.04,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xFF8cb369))),
-                            ),
-                          ),
-                        )
-                      : Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  MediaQuery.of(context).size.width * 0.05,
-                                  MediaQuery.of(context).size.width * 0.05,
-                                  MediaQuery.of(context).size.width * 0.05,
-                                  0),
-                              child: Text(
-                                'Add to your diary',
-                                style: TextStyle(
+                                      color: Color(0xFFb9b9b9),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    foodName,
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                        color: Color(0xffE4572E)),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    'Calories: ',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFb9b9b9),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.01),
+                                  child: Text(
+                                    database[0]["Calories"].toString() + ' kcal per dish',
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                        color: Color(0xffE4572E)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextField(
+                                    controller: dateController,
+                                    decoration: const InputDecoration(
+                                        icon: Icon(Icons.calendar_today),
+                                        labelText: "Enter Date"),
+                                    readOnly: true,
+                                    onTap: () async {
+                                      DateTime? pickedDate =
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime
+                                                  .now(), //get today's date
+                                              firstDate: DateTime(
+                                                  2000), //DateTime.now() - not to allow to choose before today.
+                                              lastDate: DateTime(2101));
+                                      if (pickedDate != null) {
+                                        print(
+                                            pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                                        String formattedDate =
+                                            DateFormat('yyyy-MM-dd').format(
+                                                pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                        print(
+                                            formattedDate); //formatted date output using intl package =>  2022-07-04
+                                        //You can format date as per your need
+
+                                        setState(() {
+                                          dateController.text =
+                                              formattedDate; //set foratted date to TextField value.
+                                        });
+                                      } else {
+                                        print("Date is not selected");
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  'Please select your meals type',
+                                  style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            0.05,
+                                            0.04,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xffE4572E)),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.05),
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    color: Color(0xFFb9b9b9),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.05),
+                                  child: Row(
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                        child: Text(
-                                          'Dish Name: ',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFb9b9b9),
+                                                0.4,
+                                            child: RadioListTile(
+                                                title: Text("Breakfast"),
+                                                value: "Breakfast",
+                                                groupValue: meal,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    meal =
+                                                        value.toString();
+                                                  });
+                                                }),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                        child: Text(
-                                          foodName,
-                                          style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              color: Color(0xffE4572E)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                        child: Text(
-                                          'Calories: ',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFb9b9b9),
+                                                0.4,
+                                            child: RadioListTile(
+                                                title: Text("Lunch"),
+                                                value: "Lunch",
+                                                groupValue: meal,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    meal =
+                                                        value.toString();
+                                                  });
+                                                }),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width *
-                                                0.01),
-                                        child: Text(
-                                          database[0]["Calories"].toString() +
-                                              ' kcal per dish',
-                                          style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              color: Color(0xffE4572E)),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child:
-                                      TextField(
-                                        controller: dateController,
-                                        decoration: const InputDecoration(
-                                          icon: Icon(Icons.calendar_today),
-                                          labelText: "Enter Date"
-                                        ),
-                                        readOnly: true,
-                                        onTap: () async{
-                                          DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                       initialDate: DateTime.now(), //get today's date
-                      firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101)
-                  );
-                  if(pickedDate != null ){
-                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
-                        //You can format date as per your need
-
-                      setState(() {
-                         dateController.text = formattedDate; //set foratted date to TextField value. 
-                      });
-                  }else{
-                      print("Date is not selected");
-                  }
-                                        },
-                                      ),),
-                                      Text(
-                                        'Please select your meals type',
-                                        style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.04,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFFb9b9b9),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery.of(context).size.width *
-                                                0.05),
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Row(
-                                                    children: [
-                                                      Radio(
-                                                          value: 'Breakfast',
-                                                          groupValue: 'null',
-                                                          onChanged:
-                                                              (value) {}),
-                                                      Expanded(
-                                                          child:
-                                                              Text('Breakfast'))
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Row(
-                                                    children: [
-                                                      Radio(
-                                                          value: 'Lunch',
-                                                          groupValue: 'null',
-                                                          onChanged:
-                                                              (value) {}),
-                                                      Text('Lunch')
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Row(
-                                                    children: [
-                                                      Radio(
-                                                          value: 'Dinner',
-                                                          groupValue: 'null',
-                                                          onChanged:
-                                                              (value) {}),
-                                                      Text('Dinner')
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.4,
+                                            child: RadioListTile(
+                                                title: Text("Dinner"),
+                                                value: "Dinner",
+                                                groupValue: meal,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    meal =
+                                                        value.toString();
+                                                  });
+                                                }),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  0,
-                                  0,
-                                  MediaQuery.of(context).size.height * 0.03,
-                                  MediaQuery.of(context).size.height * 0.4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.25,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: FloatingActionButton(
-                                      child: Text(
-                                        'Save',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.02,
-                                        ),
-                                      ),
-                                      backgroundColor: Color(0xFF8cb369),
-                                      shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(20.0),
-                                      ),
-                                      onPressed: () => addDiary(
-                                              database[0]["Calories"].toString(),
-                                              database[0]["FoodNameENG"].toString(),
-                                              database[0]["FoodNameTH"].toString(),
-                                              database[0]["Fat"].toString(),
-                                              database[0]["Carb"].toString(),
-                                              database[0]["Protein"].toString(),
-                                              database[0]["Sodium"].toString(),
-                                              database[0]["Portion"].toString(),
-                                              dateController.text
-                                            
-                                      ),
-                                      heroTag: null,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
                           ],
                         ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            0,
+                            0,
+                            MediaQuery.of(context).size.height * 0.03,
+                            MediaQuery.of(context).size.height * 0.4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              child: FloatingActionButton(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.02,
+                                  ),
+                                ),
+                                backgroundColor: Color(0xFF8cb369),
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(20.0),
+                                ),
+                                onPressed: () => addDiary(
+                                    database[0]["Calories"].toString(),
+                                    database[0]["FoodNameENG"].toString(),
+                                    database[0]["FoodNameTH"].toString(),
+                                    database[0]["Fat"].toString(),
+                                    database[0]["Carb"].toString(),
+                                    database[0]["Protein"].toString(),
+                                    database[0]["Sodium"].toString(),
+                                    database[0]["Portion"].toString(),
+                                    dateController.text,
+                                    meal),
+                                heroTag: null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
