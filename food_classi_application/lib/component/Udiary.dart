@@ -206,7 +206,8 @@ class _UdiaryState extends State<Udiary> {
                           child: Text(
                             "User Diary Information",
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.05,
                             ),
                           ),
                         ),
@@ -215,7 +216,8 @@ class _UdiaryState extends State<Udiary> {
                       body: Center(
                         child: ListView(children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(
+                                MediaQuery.of(context).size.width * 0.05),
                             child: Center(
                               child: Container(
                                 child: Align(
@@ -232,7 +234,8 @@ class _UdiaryState extends State<Udiary> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(
+                                MediaQuery.of(context).size.width * 0.05),
                             child: Container(
                               decoration: BoxDecoration(
                                   border: Border(
@@ -243,37 +246,50 @@ class _UdiaryState extends State<Udiary> {
                                 radius: 100.0,
                                 animation: true,
                                 animationDuration: 1200,
-                                lineWidth: 15.0,
+                                lineWidth:
+                                    MediaQuery.of(context).size.width * 0.04,
                                 percent: percentCal,
                                 center: new Text(
                                   remainCal,
                                   style: new TextStyle(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 20.0,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.05,
                                       color: Color.fromRGBO(228, 87, 46, 1)),
                                 ),
                                 footer: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Row(children: [
-                                    new Text(
-                                      "Max calories per day: ",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 17.0,
-                                          color:
-                                              Color.fromRGBO(228, 87, 46, 1)),
-                                    ),
-                                    new Text(
-                                      eatCal.toString() +
-                                          "/" +
-                                          maxCal.toString() +
-                                          " Kcal",
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 17.0,
-                                          color: Colors.grey),
-                                    ),
-                                  ]),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.05),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        new Text(
+                                          "Max calories per day: ",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.045,
+                                              color: Color.fromRGBO(
+                                                  228, 87, 46, 1)),
+                                        ),
+                                        new Text(
+                                          eatCal.toString() +
+                                              "/" +
+                                              maxCal.toString() +
+                                              " Kcal",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.045,
+                                              color: Colors.grey),
+                                        ),
+                                      ]),
                                 ),
                                 circularStrokeCap: CircularStrokeCap.butt,
                                 backgroundColor:
@@ -331,11 +347,15 @@ class _UdiaryState extends State<Udiary> {
               DateFormat("dd MMM yyyy")
                   .format(DateTime.parse(item["date"]))
                   .toString(),
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.042,
+                  fontWeight: FontWeight.w500),
             ),
             Text(
               (item["totalCal"]).toString() + "kcal",
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.042,
+                  fontWeight: FontWeight.w500),
             ),
           ]),
           controlAffinity: ListTileControlAffinity.trailing,
@@ -344,7 +364,7 @@ class _UdiaryState extends State<Udiary> {
               constraints: BoxConstraints(
                 maxHeight: double.infinity,
               ),
-              margin: const EdgeInsets.all(20.0),
+              margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
               // padding:
               //     EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
               child: ListTileTheme(
@@ -372,17 +392,28 @@ class _UdiaryState extends State<Udiary> {
                                       builder: (context) {
                                         return SingleChildScrollView(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 20),
+                                            padding: EdgeInsets.only(
+                                                top: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05),
                                             child: Column(
                                               children: [
                                                 // Dish Name
                                                 Center(
                                                   child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 10),
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.02,
+                                                        vertical: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.01),
                                                     child: Center(
                                                       child: Text(
                                                         dish_list[index][
@@ -392,7 +423,11 @@ class _UdiaryState extends State<Udiary> {
                                                                 ["FoodNameTH"] +
                                                             ")",
                                                         style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.047,
                                                             color:
                                                                 Color.fromRGBO(
                                                                     228,
@@ -419,8 +454,11 @@ class _UdiaryState extends State<Udiary> {
                                                 ),
                                                 // Calories
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.02),
                                                   child: Container(
                                                       child: Column(
                                                     mainAxisAlignment:
@@ -428,10 +466,13 @@ class _UdiaryState extends State<Udiary> {
                                                             .center,
                                                     children: [
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 20),
+                                                        padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.05),
                                                         child: Container(
                                                           decoration: BoxDecoration(
                                                               border: Border(
@@ -448,18 +489,21 @@ class _UdiaryState extends State<Udiary> {
                                                                     "Energy",
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            20,
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.05,
                                                                         color: Colors
                                                                             .grey),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .symmetric(
+                                                                  padding: EdgeInsets.symmetric(
                                                                       horizontal:
-                                                                          20,
-                                                                      vertical:
-                                                                          5),
+                                                                          MediaQuery.of(context).size.width *
+                                                                              0.05,
+                                                                      vertical: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.01),
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -471,34 +515,34 @@ class _UdiaryState extends State<Udiary> {
                                                                         children: [
                                                                           Container(
                                                                             padding:
-                                                                                EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                                EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02, vertical: MediaQuery.of(context).size.width * 0.02),
                                                                             child:
                                                                                 Row(
                                                                               children: [
                                                                                 Text(
                                                                                   "Calories per dish: ",
-                                                                                  style: TextStyle(fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
+                                                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, color: Color.fromRGBO(228, 87, 46, 1)),
                                                                                 ),
                                                                                 Text(
                                                                                   dish_list[index]["Calories"].toString() + " (Kcal) ",
-                                                                                  style: TextStyle(fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
+                                                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, color: Color.fromRGBO(140, 179, 105, 1)),
                                                                                 ),
                                                                               ],
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             padding:
-                                                                                EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                                EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02, vertical: MediaQuery.of(context).size.width * 0.02),
                                                                             child:
                                                                                 Row(
                                                                               children: [
                                                                                 Text(
                                                                                   "Portion: ",
-                                                                                  style: TextStyle(fontSize: 14, color: Color.fromRGBO(228, 87, 46, 1)),
+                                                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, color: Color.fromRGBO(228, 87, 46, 1)),
                                                                                 ),
                                                                                 Text(
                                                                                   dish_list[index]["Portion"].toString() + " (Serving) ",
-                                                                                  style: TextStyle(fontSize: 14, color: Color.fromRGBO(140, 179, 105, 1)),
+                                                                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04, color: Color.fromRGBO(140, 179, 105, 1)),
                                                                                 ),
                                                                               ],
                                                                             ),
@@ -513,25 +557,40 @@ class _UdiaryState extends State<Udiary> {
                                                       ),
                                                       // Nutrients
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 10),
+                                                        padding: EdgeInsets.only(
+                                                            top: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.02),
                                                         child: Container(
                                                           child: Text(
                                                             "Nutritions",
                                                             style: TextStyle(
-                                                                fontSize: 20,
+                                                                fontSize: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.05,
                                                                 color: Colors
                                                                     .grey),
                                                           ),
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 5,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal:
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                          vertical: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.01,
                                                         ),
                                                         child: Center(
                                                           child: Row(
@@ -545,22 +604,24 @@ class _UdiaryState extends State<Udiary> {
                                                                   Container(
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
-                                                                            10,
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.01,
                                                                         vertical:
-                                                                            10),
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.01),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Fat: ",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(228, 87, 46, 1)),
                                                                         ),
                                                                         Text(
                                                                           dish_list[index]["Fat"].toString() +
                                                                               " (g.)",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(140, 179, 105, 1)),
                                                                         ),
                                                                       ],
@@ -569,22 +630,24 @@ class _UdiaryState extends State<Udiary> {
                                                                   Container(
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
-                                                                            10,
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.02,
                                                                         vertical:
-                                                                            10),
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.02),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Carbohydrate: ",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(228, 87, 46, 1)),
                                                                         ),
                                                                         Text(
                                                                           dish_list[index]["Carb"].toString() +
                                                                               " (g.)",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(140, 179, 105, 1)),
                                                                         ),
                                                                       ],
@@ -598,22 +661,24 @@ class _UdiaryState extends State<Udiary> {
                                                                   Container(
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
-                                                                            10,
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.01,
                                                                         vertical:
-                                                                            10),
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.01),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Fat: ",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(228, 87, 46, 1)),
                                                                         ),
                                                                         Text(
                                                                           dish_list[index]["Sodium"].toString() +
                                                                               " (mg.)",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(140, 179, 105, 1)),
                                                                         ),
                                                                       ],
@@ -622,22 +687,24 @@ class _UdiaryState extends State<Udiary> {
                                                                   Container(
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
-                                                                            10,
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.02,
                                                                         vertical:
-                                                                            10),
+                                                                            MediaQuery.of(context).size.width *
+                                                                                0.02),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Protein: ",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(228, 87, 46, 1)),
                                                                         ),
                                                                         Text(
                                                                           dish_list[index]["Protein"].toString() +
                                                                               " (g.)",
                                                                           style: TextStyle(
-                                                                              fontSize: 14,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.04,
                                                                               color: Color.fromRGBO(140, 179, 105, 1)),
                                                                         ),
                                                                       ],
@@ -650,10 +717,19 @@ class _UdiaryState extends State<Udiary> {
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                0, 8, 0, 20),
+                                                        padding: EdgeInsets.fromLTRB(
+                                                            0,
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.02,
+                                                            0,
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.05),
                                                         child:
                                                             FloatingActionButton
                                                                 .extended(
@@ -664,7 +740,11 @@ class _UdiaryState extends State<Udiary> {
                                                           icon: Icon(
                                                             // <-- Icon
                                                             Icons.delete,
-                                                            size: 24.0,
+                                                            size: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.051,
                                                           ),
                                                           onPressed: () => delDish(
                                                               item["id"],
@@ -693,6 +773,9 @@ class _UdiaryState extends State<Udiary> {
                                         child: new Image.memory(
                                             Uint8List.fromList(temp_list)),
                                         backgroundColor: Colors.transparent,
+                                        radius:
+                                            MediaQuery.of(context).size.width *
+                                                0.08,
                                       ),
                                       title: Text(
                                         dish_list[index]["FoodNameENG"],
@@ -700,7 +783,10 @@ class _UdiaryState extends State<Udiary> {
                                             color:
                                                 Color.fromRGBO(228, 87, 46, 1),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.043),
                                       ),
                                       subtitle: Row(
                                           mainAxisAlignment:
@@ -713,14 +799,22 @@ class _UdiaryState extends State<Udiary> {
                                                     " kcal",
                                                 style: TextStyle(
                                                     color: Color(0xFF8cb369),
-                                                    fontSize: 15)),
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.04)),
                                             Text(
                                                 "Time: " +
                                                     dish_list[index]["Meal"]
                                                         .toString(),
                                                 style: TextStyle(
                                                     color: Color(0xFF8cb369),
-                                                    fontSize: 15)),
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.04)),
                                           ]),
                                     )),
                               );

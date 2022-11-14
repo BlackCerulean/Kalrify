@@ -21,33 +21,53 @@ class HomeScreen extends StatelessWidget {
 
           // Text field
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
             child: Container(
               child: Text(
                 "Home",
-                style: TextStyle(fontSize: 50, color: Color(0xFFB9B9B9)),
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.1,
+                    color: Color(0xFFB9B9B9)),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 20.0),
-            child: Container(
-              child: Text(
-                '''Welcome to Kalrify 
-                Please select the Method below to find the food information, or view the personal diary''',
-                style: TextStyle(fontSize: 15, color: Color(0xFF8cb369)),
-                textAlign: TextAlign.center,
-              ),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.04,
+                vertical: 0),
+            child: Column(
+              children: [
+                Container(
+                  child: Text(
+                    '''Welcome to Kalrify''',
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        color: Color(0xFF8cb369)),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    'Please select the Method below to find the food information, or view the personal diary',
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        color: Color(0xFF8cb369)),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
             ),
           ),
 
           // List of Features start here
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
             child: Container(
               child: Text(
                 "Features",
-                style: TextStyle(fontSize: 50, color: Color(0xFFB9B9B9)),
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.1,
+                    color: Color(0xFFB9B9B9)),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -55,24 +75,42 @@ class HomeScreen extends StatelessWidget {
 
           // Button link to list of dishes feature
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                0.0,
+                MediaQuery.of(context).size.width * 0.04,
+                MediaQuery.of(context).size.width * 0.04),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: FloatingActionButton(
-                child: Text(
-                  "List of the Dishes",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                      child: Icon(Icons.list_outlined,
+                          size: MediaQuery.of(context).size.width * 0.08),
+                    ),
+                    Text(
+                      "List of the Dishes",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Color(0xFF8cb369),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.03),
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return Dsearch(token: token,);
+                    return Dsearch(
+                      token: token,
+                    );
                   }));
                 },
                 heroTag: 'DSearch',
@@ -85,20 +123,36 @@ class HomeScreen extends StatelessWidget {
 
           // Button link to analyze image using taken picture
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                0.0,
+                MediaQuery.of(context).size.width * 0.04,
+                MediaQuery.of(context).size.width * 0.04),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: FloatingActionButton(
-                child: Text(
-                  "Take an Image",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                      child: Icon(Icons.photo_camera,
+                          size: MediaQuery.of(context).size.width * 0.08),
+                    ),
+                    Text(
+                      "Take an Image",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Color(0xFF8cb369),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.03),
                 ),
                 onPressed: () {
                   image_picker(0, context);
@@ -113,20 +167,36 @@ class HomeScreen extends StatelessWidget {
 
           // Button link to analyze image with uploaded picture
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                0.0,
+                MediaQuery.of(context).size.width * 0.04,
+                MediaQuery.of(context).size.width * 0.04),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: FloatingActionButton(
-                child: Text(
-                  "Upload an Image",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                      child: Icon(Icons.file_upload_outlined,
+                          size: MediaQuery.of(context).size.width * 0.08),
+                    ),
+                    Text(
+                      "Upload an Image",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Color(0xFF8cb369),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.03),
                 ),
                 onPressed: () {
                   image_picker(1, context);
@@ -139,26 +209,57 @@ class HomeScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 2,
           ),
 
+          Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+            child: Container(
+              child: Text(
+                "User",
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.1,
+                    color: Color(0xFFB9B9B9)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+
           // Diary for user to manage
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                0.0,
+                MediaQuery.of(context).size.width * 0.04,
+                MediaQuery.of(context).size.width * 0.04),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: FloatingActionButton(
-                child: Text(
-                  "User Diary",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                      child: Icon(Icons.book_outlined,
+                          size: MediaQuery.of(context).size.width * 0.08),
+                    ),
+                    Text(
+                      "User Diary",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Color(0xFF8cb369),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.03),
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return Udiary(token: token,);
+                    return Udiary(
+                      token: token,
+                    );
                   }));
                 },
                 heroTag: 'Udiary',
@@ -168,20 +269,36 @@ class HomeScreen extends StatelessWidget {
 
           //Logout Button
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                0.0,
+                MediaQuery.of(context).size.width * 0.04,
+                MediaQuery.of(context).size.width * 0.04),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.06,
               child: FloatingActionButton(
-                child: Text(
-                  "Logout",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, MediaQuery.of(context).size.width * 0.01, 0),
+                      child: Icon(Icons.logout_outlined,
+                          size: MediaQuery.of(context).size.width * 0.08),
+                    ),
+                    Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                    ),
+                  ],
                 ),
                 backgroundColor: Color(0xFFE4572E),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.03),
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {

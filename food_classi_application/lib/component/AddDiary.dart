@@ -78,8 +78,8 @@ class _AddDiaryState extends State<AddDiary> {
   }
 
   String addUrl = 'http://kalrify.sit.kmutt.ac.th:3000/diary/addDiary';
-  Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion, date, meal) async {
+  Future addDiary(cal, engName, thName, fat, carb, protein, sodium, portion,
+      date, meal) async {
     print(meal);
     var res = await http.post(
       Uri.parse(addUrl),
@@ -94,7 +94,7 @@ class _AddDiaryState extends State<AddDiary> {
         "Protein": protein,
         "Sodium": sodium,
         "Portion": portion,
-        "meal":meal,
+        "meal": meal,
       },
     );
     print(res.statusCode);
@@ -277,8 +277,7 @@ class _AddDiaryState extends State<AddDiary> {
                                                 groupValue: meal,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    meal =
-                                                        value.toString();
+                                                    meal = value.toString();
                                                   });
                                                 }),
                                           ),
@@ -293,8 +292,7 @@ class _AddDiaryState extends State<AddDiary> {
                                                 groupValue: meal,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    meal =
-                                                        value.toString();
+                                                    meal = value.toString();
                                                   });
                                                 }),
                                           ),
@@ -309,8 +307,7 @@ class _AddDiaryState extends State<AddDiary> {
                                                 groupValue: meal,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    meal =
-                                                        value.toString();
+                                                    meal = value.toString();
                                                   });
                                                 }),
                                           ),
@@ -348,7 +345,9 @@ class _AddDiaryState extends State<AddDiary> {
                                 ),
                                 backgroundColor: Color(0xFF8cb369),
                                 shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(20.0),
+                                  borderRadius: new BorderRadius.circular(
+                                      MediaQuery.of(context).size.height *
+                                          0.05),
                                 ),
                                 onPressed: () => addDiary(
                                     cal,

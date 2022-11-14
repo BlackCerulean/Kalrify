@@ -12,6 +12,7 @@ import 'dart:convert';
 
 void main() => runApp(MaterialApp(
     // home: HomeScreen(),
+    debugShowCheckedModeBanner: false,
     home: LoginScreen()));
 
 // class MyApp extends StatefulWidget {

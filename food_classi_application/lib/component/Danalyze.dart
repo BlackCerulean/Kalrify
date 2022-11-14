@@ -21,9 +21,13 @@ class Danalyze extends StatefulWidget {
 // Image variable
   XFile? image;
   File imgpath;
-  Danalyze({Key? key, @required this.image, required this.imgpath, required this.token})
+  Danalyze(
+      {Key? key,
+      @required this.image,
+      required this.imgpath,
+      required this.token})
       : super(key: key);
-      final String token;
+  final String token;
   @override
   State<Danalyze> createState() => _DanalyzeState(token: token);
 }
@@ -59,14 +63,17 @@ class _DanalyzeState extends State<Danalyze> {
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen(token: token,)),
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      token: token,
+                    )),
           ),
         ),
         title: Center(
           child: Text(
             "Analysis of Dish Image",
             style: TextStyle(
-              fontSize: 25,
+              fontSize: MediaQuery.of(context).size.width * 0.05,
             ),
           ),
         ),
@@ -84,7 +91,8 @@ class _DanalyzeState extends State<Danalyze> {
                         width: MediaQuery.of(context).size.width * 0.8),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.width * 0.05),
                     child: Container(
                       child: Text(
                         foodName,
@@ -102,7 +110,7 @@ class _DanalyzeState extends State<Danalyze> {
 
           // Button for calling APIs to use analysis function
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.08,
@@ -114,24 +122,26 @@ class _DanalyzeState extends State<Danalyze> {
                           CircularProgressIndicator(color: Colors.white),
                           const SizedBox(width: 25),
                           Text(
-                            'Analysing...',
+                            'Identifying...',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 25.0,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.06,
                             ),
                           ),
                         ],
                       )
                     : Text(
-                        "Analyze",
+                        "Identify",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                          fontSize: MediaQuery.of(context).size.width * 0.06,
                         ),
                       ),
                 backgroundColor: Color(0xFF8cb369),
                 shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0),
+                  borderRadius: new BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.05),
                 ),
                 onPressed: () async {
                   if (isLoading) return;
@@ -146,7 +156,9 @@ class _DanalyzeState extends State<Danalyze> {
           ),
         ],
       ),
-      floatingActionButton: CircularFabWidget(token: token,),
+      floatingActionButton: CircularFabWidget(
+        token: token,
+      ),
     );
   }
 

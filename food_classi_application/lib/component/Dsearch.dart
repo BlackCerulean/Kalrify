@@ -54,7 +54,6 @@ class _DsearchState extends State<Dsearch> {
     return "Success!";
   }
 
-
   void filterSearchResults(String query) {
     List dummySearchList = [];
     dummySearchList.addAll(database);
@@ -104,7 +103,7 @@ class _DsearchState extends State<Dsearch> {
           child: Text(
             "Search Dish Information",
             style: TextStyle(
-              fontSize: 19,
+              fontSize: MediaQuery.of(context).size.width * 0.05,
             ),
           ),
         ),
@@ -115,7 +114,8 @@ class _DsearchState extends State<Dsearch> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                 child: TextField(
                   onChanged: (value) {
                     value = searchController.text;
@@ -123,22 +123,26 @@ class _DsearchState extends State<Dsearch> {
                   },
                   controller: searchController,
                   decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(vertical: 15.0),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.width * 0.04),
                       fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(width: 0.8)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.width * 0.07),
                           borderSide: BorderSide(
-                              width: 0.8,
+                              width:
+                                  MediaQuery.of(context).size.width * 0.007)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.width * 0.07),
+                          borderSide: BorderSide(
+                              width: MediaQuery.of(context).size.width * 0.003,
                               color: Theme.of(context).primaryColor)),
                       hintText: "Search any dish name",
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.search,
-                        size: 30,
+                        size: MediaQuery.of(context).size.width * 0.07,
                       ),
                       suffixIcon: IconButton(
                           icon: const Icon(Icons.clear),
@@ -154,8 +158,9 @@ class _DsearchState extends State<Dsearch> {
               ),
               Container(
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.04,
+                      vertical: MediaQuery.of(context).size.width * 0.05),
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
                     itemCount: items.length,
@@ -164,20 +169,31 @@ class _DsearchState extends State<Dsearch> {
                         onTap: () {
                           showModalBottomSheet(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(36.0),
+                                borderRadius: BorderRadius.circular(
+                                    MediaQuery.of(context).size.width * 0.07),
                               ),
                               context: context,
                               builder: (context) {
                                 return SingleChildScrollView(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 20),
+                                    padding: EdgeInsets.only(
+                                        top: MediaQuery.of(context).size.width *
+                                            0.03),
                                     child: Column(
                                       children: [
                                         // Dish Name
                                         Center(
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 10),
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.03,
+                                                vertical: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.02),
                                             child: Center(
                                               child: Text(
                                                 items[index]["FoodNameENG"] +
@@ -185,7 +201,11 @@ class _DsearchState extends State<Dsearch> {
                                                     items[index]["FoodNameTH"] +
                                                     ")",
                                                 style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.05,
                                                     color: Color.fromRGBO(
                                                         228, 87, 46, 1)),
                                               ),
@@ -209,16 +229,23 @@ class _DsearchState extends State<Dsearch> {
                                         ),
                                         // Calories
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.03),
                                           child: Container(
                                               child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.center,
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.05),
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                       border: Border(
@@ -234,39 +261,48 @@ class _DsearchState extends State<Dsearch> {
                                                       child: Text(
                                                         "Energy",
                                                         style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.05,
                                                             color: Colors.grey),
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 5),
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                          vertical: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.01),
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
                                                         children: [
                                                           Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
                                                             children: [
                                                               Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            10,
-                                                                        vertical:
-                                                                            10),
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.05,
+                                                                    vertical: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.01),
                                                                 child: Row(
                                                                   children: [
                                                                     Text(
                                                                       "Calories per dish: ",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
+                                                                          fontSize: MediaQuery.of(context).size.width *
+                                                                              0.04,
                                                                           color: Color.fromRGBO(
                                                                               228,
                                                                               87,
@@ -278,8 +314,8 @@ class _DsearchState extends State<Dsearch> {
                                                                               .toString() +
                                                                           " (Kcal) ",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
+                                                                          fontSize: MediaQuery.of(context).size.width *
+                                                                              0.04,
                                                                           color: Color.fromRGBO(
                                                                               140,
                                                                               179,
@@ -290,19 +326,22 @@ class _DsearchState extends State<Dsearch> {
                                                                 ),
                                                               ),
                                                               Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            10,
-                                                                        vertical:
-                                                                            10),
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.02,
+                                                                    vertical: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.02),
                                                                 child: Row(
                                                                   children: [
                                                                     Text(
                                                                       "Portion: ",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
+                                                                          fontSize: MediaQuery.of(context).size.width *
+                                                                              0.04,
                                                                           color: Color.fromRGBO(
                                                                               228,
                                                                               87,
@@ -314,8 +353,8 @@ class _DsearchState extends State<Dsearch> {
                                                                               .toString() +
                                                                           " (Serving) ",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
+                                                                          fontSize: MediaQuery.of(context).size.width *
+                                                                              0.04,
                                                                           color: Color.fromRGBO(
                                                                               140,
                                                                               179,
@@ -335,22 +374,36 @@ class _DsearchState extends State<Dsearch> {
                                               ),
                                               // Nutrients
                                               Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10),
+                                                padding: EdgeInsets.only(
+                                                    top: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.01),
                                                 child: Container(
                                                   child: Text(
                                                     "Nutritions",
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.05,
                                                         color: Colors.grey),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 20,
-                                                  vertical: 5,
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05,
+                                                  vertical:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.01,
                                                 ),
                                                 child: Center(
                                                   child: Row(
@@ -362,19 +415,26 @@ class _DsearchState extends State<Dsearch> {
                                                       Column(
                                                         children: [
                                                           Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02,
+                                                                vertical: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02),
                                                             child: Row(
                                                               children: [
                                                                 Text(
                                                                   "Fat: ",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           228,
                                                                           87,
@@ -387,8 +447,10 @@ class _DsearchState extends State<Dsearch> {
                                                                           .toString() +
                                                                       " (g.)",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           140,
                                                                           179,
@@ -399,19 +461,22 @@ class _DsearchState extends State<Dsearch> {
                                                             ),
                                                           ),
                                                           Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02,
+                                                                vertical: 0),
                                                             child: Row(
                                                               children: [
                                                                 Text(
                                                                   "Carbohydrate: ",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           228,
                                                                           87,
@@ -424,8 +489,10 @@ class _DsearchState extends State<Dsearch> {
                                                                           .toString() +
                                                                       " (g.)",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           140,
                                                                           179,
@@ -441,19 +508,26 @@ class _DsearchState extends State<Dsearch> {
                                                       Column(
                                                         children: [
                                                           Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02,
+                                                                vertical: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02),
                                                             child: Row(
                                                               children: [
                                                                 Text(
-                                                                  "Fat: ",
+                                                                  "Sodium: ",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           228,
                                                                           87,
@@ -466,8 +540,10 @@ class _DsearchState extends State<Dsearch> {
                                                                           .toString() +
                                                                       " (mg.)",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           140,
                                                                           179,
@@ -478,19 +554,22 @@ class _DsearchState extends State<Dsearch> {
                                                             ),
                                                           ),
                                                           Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.02,
+                                                                vertical: 0),
                                                             child: Row(
                                                               children: [
                                                                 Text(
                                                                   "Protein: ",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           228,
                                                                           87,
@@ -503,8 +582,10 @@ class _DsearchState extends State<Dsearch> {
                                                                           .toString() +
                                                                       " (g.)",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.04,
                                                                       color: Color.fromRGBO(
                                                                           140,
                                                                           179,
@@ -524,8 +605,14 @@ class _DsearchState extends State<Dsearch> {
                                           )),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 8, 0, 20),
+                                          padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              0,
+                                              0,
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.05),
                                           child: FloatingActionButton.extended(
                                             label: Text(
                                                 'Add to Diary'), // <-- Text
@@ -533,27 +620,42 @@ class _DsearchState extends State<Dsearch> {
                                             icon: Icon(
                                               // <-- Icon
                                               Icons.note_alt,
-                                              size: 24.0,
+                                              size: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.06,
                                             ),
                                             onPressed: () {
                                               print("data: ");
                                               print(items[index]);
-                                              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                                              return AddDiary(cal: items[index]["Calories"]
-                                                  .toString(),
-                                                  engName: items[index]["FoodNameENG"]
-                                                  .toString(),
-                                              thaiName: items[index]["FoodNameTH"]
-                                                  .toString(),
-                                              fat: items[index]["Fat"].toString(),
-                                              carb: items[index]["Carb"].toString(),
-                                              protein: items[index]["Protein"]
-                                                  .toString(),
-                                              sodium:items[index]["Sodium"].toString(),
-                                              portion:items[index]["Portion"]
-                                                  .toString(),
-                                                  token: token,);
-                                            }));},
+                                              Navigator.of(context).push(
+                                                  HeroDialogRoute(
+                                                      builder: (context) {
+                                                return AddDiary(
+                                                  cal: items[index]["Calories"]
+                                                      .toString(),
+                                                  engName: items[index]
+                                                          ["FoodNameENG"]
+                                                      .toString(),
+                                                  thaiName: items[index]
+                                                          ["FoodNameTH"]
+                                                      .toString(),
+                                                  fat: items[index]["Fat"]
+                                                      .toString(),
+                                                  carb: items[index]["Carb"]
+                                                      .toString(),
+                                                  protein: items[index]
+                                                          ["Protein"]
+                                                      .toString(),
+                                                  sodium: items[index]["Sodium"]
+                                                      .toString(),
+                                                  portion: items[index]
+                                                          ["Portion"]
+                                                      .toString(),
+                                                  token: token,
+                                                );
+                                              }));
+                                            },
                                           ),
                                         ),
                                       ],
@@ -567,18 +669,22 @@ class _DsearchState extends State<Dsearch> {
                             child: new Image.memory(Uint8List.fromList(
                                 items[index]["Image"]["data"].cast<int>())),
                             backgroundColor: Colors.transparent,
+                            radius: MediaQuery.of(context).size.width * 0.08,
                           ),
                           title: Text(
                             items[index]["FoodNameENG"],
                             style: TextStyle(
                                 color: Color.fromRGBO(228, 87, 46, 1),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.043),
                           ),
                           subtitle: Text(
                               items[index]["Calories"].toString() + " Kcal",
                               style: TextStyle(
-                                  color: Color(0xFF8cb369), fontSize: 15)),
+                                  color: Color(0xFF8cb369),
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.04)),
                         ),
                       );
                     },

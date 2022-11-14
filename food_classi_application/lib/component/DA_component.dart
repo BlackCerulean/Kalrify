@@ -28,12 +28,14 @@ class selectImage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.06),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width * 0.04),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -45,18 +47,23 @@ class selectImage extends StatelessWidget {
                                   Icons.file_upload_outlined,
                                   size: MediaQuery.of(context).size.width * 0.3,
                                 ),
-                                const SizedBox(width: 25),
+                                SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05),
                                 Text(
                                   "Upload Image",
                                   style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.05,
                                   ),
                                 ),
                               ],
                             ),
                             backgroundColor: Color(0xFF8cb369),
                             shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(32.0),
+                              borderRadius: new BorderRadius.circular(
+                                  MediaQuery.of(context).size.width * 0.06),
                             ),
                             onPressed: () async {
                               image_picker(1, context);
@@ -66,7 +73,8 @@ class selectImage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width * 0.04),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -81,14 +89,17 @@ class selectImage extends StatelessWidget {
                                 Text(
                                   "Take Photo",
                                   style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.05,
                                   ),
                                 ),
                               ],
                             ),
                             backgroundColor: Color(0xFF8cb369),
                             shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(32.0),
+                              borderRadius: new BorderRadius.circular(
+                                  MediaQuery.of(context).size.width * 0.06),
                             ),
                             onPressed: () async {
                               image_picker(0, context);
@@ -115,10 +126,11 @@ class selectImage extends StatelessWidget {
     debugPrint("Image Picker Activated");
     if (a == 0) {
       _image = (await _picker.pickImage(
-          source: ImageSource.camera,
-          maxHeight: 512,
-          maxWidth: 512,
-          imageQuality: 80))!;
+        source: ImageSource.camera,
+        maxHeight: 512,
+        maxWidth: 512,
+        // imageQuality: 80,
+      ))!;
     } else {
       _image = (await _picker.pickImage(source: ImageSource.gallery))!;
     }
@@ -172,7 +184,8 @@ class _ViewmealState extends State<Viewmeal> {
             child: Material(
               elevation: 2,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36)),
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.06)),
               child: SingleChildScrollView(
                 child: database.isEmpty
                     ? Padding(
@@ -183,7 +196,7 @@ class _ViewmealState extends State<Viewmeal> {
                           height: MediaQuery.of(context).size.height * 0.6,
                           child: Center(
                             child: Text(
-                                'Please tap an "Analyze" button and wait for the result before using this feature',
+                                'Please tap an "Identify" button and wait for the result before using this feature',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize:
@@ -216,7 +229,10 @@ class _ViewmealState extends State<Viewmeal> {
                                             database[0]["FoodNameTH"] +
                                             ")",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.045,
                                             color:
                                                 Color.fromRGBO(228, 87, 46, 1)),
                                       ),
@@ -248,20 +264,27 @@ class _ViewmealState extends State<Viewmeal> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05),
                                         child: Container(
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   bottom: BorderSide(
                                                       color: Color.fromRGBO(
-                                                          255, 170, 90, 1)))),
+                                                          140, 179, 105, 1)))),
                                           child: Column(children: [
                                             Container(
                                               child: Text(
                                                 "Energy",
                                                 style: TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.05,
                                                     color: Colors.grey),
                                               ),
                                             ),
@@ -291,7 +314,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                             Text(
                                                               "Calories per dish: ",
                                                               style: TextStyle(
-                                                                  fontSize: 14,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04,
                                                                   color: Color
                                                                       .fromRGBO(
                                                                           228,
@@ -304,7 +331,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                       .toString() +
                                                                   " (Kcal) ",
                                                               style: TextStyle(
-                                                                  fontSize: 14,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04,
                                                                   color: Color
                                                                       .fromRGBO(
                                                                           140,
@@ -327,7 +358,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                             Text(
                                                               "Portion: ",
                                                               style: TextStyle(
-                                                                  fontSize: 14,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04,
                                                                   color: Color
                                                                       .fromRGBO(
                                                                           228,
@@ -340,7 +375,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                       .toString() +
                                                                   " (Serving) ",
                                                               style: TextStyle(
-                                                                  fontSize: 14,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04,
                                                                   color: Color
                                                                       .fromRGBO(
                                                                           140,
@@ -370,7 +409,10 @@ class _ViewmealState extends State<Viewmeal> {
                                           child: Text(
                                             "Nutritions",
                                             style: TextStyle(
-                                                fontSize: 20,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05,
                                                 color: Colors.grey),
                                           ),
                                         ),
@@ -378,7 +420,7 @@ class _ViewmealState extends State<Viewmeal> {
                                       Padding(
                                         padding: EdgeInsets.all(
                                             MediaQuery.of(context).size.width *
-                                                0.02),
+                                                0.01),
                                         child: Center(
                                           child: Row(
                                             mainAxisAlignment:
@@ -392,13 +434,17 @@ class _ViewmealState extends State<Viewmeal> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.02),
+                                                            0.01),
                                                     child: Row(
                                                       children: [
                                                         Text(
                                                           "Fat: ",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       228,
@@ -411,7 +457,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                   .toString() +
                                                               " (g.)",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       140,
@@ -427,13 +477,17 @@ class _ViewmealState extends State<Viewmeal> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.02),
+                                                            0.01),
                                                     child: Row(
                                                       children: [
                                                         Text(
                                                           "Carbohydrate: ",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       228,
@@ -446,7 +500,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                   .toString() +
                                                               " (g.)",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       140,
@@ -467,13 +525,17 @@ class _ViewmealState extends State<Viewmeal> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.02),
+                                                            0.01),
                                                     child: Row(
                                                       children: [
                                                         Text(
                                                           "Sodium: ",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       228,
@@ -486,7 +548,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                   .toString() +
                                                               " (mg.)",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       140,
@@ -502,13 +568,17 @@ class _ViewmealState extends State<Viewmeal> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.02),
+                                                            0.01),
                                                     child: Row(
                                                       children: [
                                                         Text(
                                                           "Protein: ",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       228,
@@ -521,7 +591,11 @@ class _ViewmealState extends State<Viewmeal> {
                                                                   .toString() +
                                                               " (g.)",
                                                           style: TextStyle(
-                                                              fontSize: 14,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04,
                                                               color: Color
                                                                   .fromRGBO(
                                                                       140,
@@ -584,13 +658,13 @@ class _addDiaryState extends State<addDiary> {
   String meal = "Breakfast";
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
   }
 
-    Future addDiary(
-      cal, engName, thName, fat, carb, protein, sodium, portion, date, meal) async {
+  Future addDiary(cal, engName, thName, fat, carb, protein, sodium, portion,
+      date, meal) async {
     print(meal);
     var res = await http.post(
       Uri.parse(addUrl),
@@ -605,7 +679,7 @@ class _addDiaryState extends State<addDiary> {
         "Protein": protein,
         "Sodium": sodium,
         "Portion": portion,
-        "meal":meal,
+        "meal": meal,
       },
     );
     if (res.statusCode == 200) {
@@ -618,14 +692,15 @@ class _addDiaryState extends State<addDiary> {
     } else {
       print('Error');
     }
-      }
+  }
+
   // bool isExecuted = false;
   @override
   Widget build(BuildContext context) {
     print(token);
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.06),
         child: Hero(
           tag: 'add-meal-diary',
           child: Container(
@@ -635,248 +710,288 @@ class _addDiaryState extends State<addDiary> {
               // color: AppColors.accentColor,
               elevation: 2,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.width * 0.045)),
               child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            MediaQuery.of(context).size.width * 0.05,
-                            MediaQuery.of(context).size.width * 0.05,
-                            MediaQuery.of(context).size.width * 0.05,
-                            0),
-                        child: Text(
-                          'Add to your diary',
-                          style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xffE4572E)),
-                        ),
-                      ),
-                      Padding(
+                child: database.isEmpty
+                    ? Padding(
                         padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.05),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.01),
-                                  child: Text(
-                                    'Dish Name: ',
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFFb9b9b9),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.01),
-                                  child: Text(
-                                    foodName,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04,
-                                        color: Color(0xffE4572E)),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.01),
-                                  child: Text(
-                                    'Calories: ',
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFFb9b9b9),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.01),
-                                  child: Text(
-                                    database[0]["Calories"].toString() + ' kcal per dish',
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04,
-                                        color: Color(0xffE4572E)),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: TextField(
-                                    controller: dateController,
-                                    decoration: const InputDecoration(
-                                        icon: Icon(Icons.calendar_today),
-                                        labelText: "Enter Date"),
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime
-                                                  .now(), //get today's date
-                                              firstDate: DateTime(
-                                                  2000), //DateTime.now() - not to allow to choose before today.
-                                              lastDate: DateTime(2101));
-                                      if (pickedDate != null) {
-                                        print(
-                                            pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                                        String formattedDate =
-                                            DateFormat('yyyy-MM-dd').format(
-                                                pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                                        print(
-                                            formattedDate); //formatted date output using intl package =>  2022-07-04
-                                        //You can format date as per your need
-
-                                        setState(() {
-                                          dateController.text =
-                                              formattedDate; //set foratted date to TextField value.
-                                        });
-                                      } else {
-                                        print("Date is not selected");
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Text(
-                                  'Please select your meals type',
-                                  style: TextStyle(
+                            MediaQuery.of(context).size.width * 0.02),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.6,
+                          child: Center(
+                            child: Text(
+                                'Please tap an "Identify" button and wait for the result before using this feature',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            0.04,
+                                            0.045,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFFb9b9b9),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(
-                                      MediaQuery.of(context).size.width * 0.05),
-                                  child: Row(
+                                    color: Color(0xFF8cb369))),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.width * 0.05,
+                                  MediaQuery.of(context).size.width * 0.05,
+                                  MediaQuery.of(context).size.width * 0.05,
+                                  0),
+                              child: Text(
+                                'Add to your diary',
+                                style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.05,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xffE4572E)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width * 0.05),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                            MediaQuery.of(context).size.width *
+                                                0.01),
+                                        child: Text(
+                                          'Dish Name: ',
+                                          style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
-                                            child: RadioListTile(
-                                                title: Text("Breakfast"),
-                                                value: "Breakfast",
-                                                groupValue: meal,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    meal =
-                                                        value.toString();
-                                                  });
-                                                }),
+                                                0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFFb9b9b9),
                                           ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                            MediaQuery.of(context).size.width *
+                                                0.01),
+                                        child: Text(
+                                          foodName,
+                                          style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.04,
+                                              color: Color(0xffE4572E)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                            MediaQuery.of(context).size.width *
+                                                0.01),
+                                        child: Text(
+                                          'Calories: ',
+                                          style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
-                                            child: RadioListTile(
-                                                title: Text("Lunch"),
-                                                value: "Lunch",
-                                                groupValue: meal,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    meal =
-                                                        value.toString();
-                                                  });
-                                                }),
+                                                0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFFb9b9b9),
                                           ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                            MediaQuery.of(context).size.width *
+                                                0.01),
+                                        child: Text(
+                                          database[0]["Calories"].toString() +
+                                              ' kcal per dish',
+                                          style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.04,
+                                              color: Color(0xffE4572E)),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
                                                 0.4,
-                                            child: RadioListTile(
-                                                title: Text("Dinner"),
-                                                value: "Dinner",
-                                                groupValue: meal,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    meal =
-                                                        value.toString();
-                                                  });
-                                                }),
-                                          ),
-                                        ],
+                                        child: TextField(
+                                          controller: dateController,
+                                          decoration: const InputDecoration(
+                                              icon: Icon(Icons.calendar_today),
+                                              labelText: "Enter Date"),
+                                          readOnly: true,
+                                          onTap: () async {
+                                            DateTime? pickedDate =
+                                                await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime
+                                                        .now(), //get today's date
+                                                    firstDate: DateTime(
+                                                        2000), //DateTime.now() - not to allow to choose before today.
+                                                    lastDate: DateTime(2101));
+                                            if (pickedDate != null) {
+                                              print(
+                                                  pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                                              String formattedDate = DateFormat(
+                                                      'yyyy-MM-dd')
+                                                  .format(
+                                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                              print(
+                                                  formattedDate); //formatted date output using intl package =>  2022-07-04
+                                              //You can format date as per your need
+
+                                              setState(() {
+                                                dateController.text =
+                                                    formattedDate; //set foratted date to TextField value.
+                                              });
+                                            } else {
+                                              print("Date is not selected");
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Text(
+                                        'Please select your meals type',
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFb9b9b9),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                            MediaQuery.of(context).size.width *
+                                                0.05),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child: RadioListTile(
+                                                      title: Text("Breakfast"),
+                                                      value: "Breakfast",
+                                                      groupValue: meal,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          meal =
+                                                              value.toString();
+                                                        });
+                                                      }),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child: RadioListTile(
+                                                      title: Text("Lunch"),
+                                                      value: "Lunch",
+                                                      groupValue: meal,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          meal =
+                                                              value.toString();
+                                                        });
+                                                      }),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child: RadioListTile(
+                                                      title: Text("Dinner"),
+                                                      value: "Dinner",
+                                                      groupValue: meal,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          meal =
+                                                              value.toString();
+                                                        });
+                                                      }),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  0,
+                                  MediaQuery.of(context).size.height * 0.03,
+                                  MediaQuery.of(context).size.height * 0.4),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    child: FloatingActionButton(
+                                      child: Text(
+                                        'Save',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.02,
+                                        ),
+                                      ),
+                                      backgroundColor: Color(0xFF8cb369),
+                                      shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(20.0),
+                                      ),
+                                      onPressed: () => addDiary(
+                                          database[0]["Calories"].toString(),
+                                          database[0]["FoodNameENG"].toString(),
+                                          database[0]["FoodNameTH"].toString(),
+                                          database[0]["Fat"].toString(),
+                                          database[0]["Carb"].toString(),
+                                          database[0]["Protein"].toString(),
+                                          database[0]["Sodium"].toString(),
+                                          database[0]["Portion"].toString(),
+                                          dateController.text,
+                                          meal),
+                                      heroTag: null,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0,
-                            0,
-                            MediaQuery.of(context).size.height * 0.03,
-                            MediaQuery.of(context).size.height * 0.4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              height: MediaQuery.of(context).size.height * 0.05,
-                              child: FloatingActionButton(
-                                child: Text(
-                                  'Save',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.02,
-                                  ),
-                                ),
-                                backgroundColor: Color(0xFF8cb369),
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(20.0),
-                                ),
-                                onPressed: () => addDiary(
-                                    database[0]["Calories"].toString(),
-                                    database[0]["FoodNameENG"].toString(),
-                                    database[0]["FoodNameTH"].toString(),
-                                    database[0]["Fat"].toString(),
-                                    database[0]["Carb"].toString(),
-                                    database[0]["Protein"].toString(),
-                                    database[0]["Sodium"].toString(),
-                                    database[0]["Portion"].toString(),
-                                    dateController.text,
-                                    meal),
-                                heroTag: null,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ),
             ),
           ),
