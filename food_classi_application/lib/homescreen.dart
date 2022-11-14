@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:food_classi_application/component/Login.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:food_classi_application/component/Dsearch.dart';
 import 'package:food_classi_application/component/Danalyze.dart';
@@ -161,6 +162,33 @@ class HomeScreen extends StatelessWidget {
                   }));
                 },
                 heroTag: 'Udiary',
+              ),
+            ),
+          ),
+
+          //Logout Button
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              height: MediaQuery.of(context).size.height * 0.05,
+              child: FloatingActionButton(
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                backgroundColor: Color(0xFFE4572E),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20.0),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return LoginScreen();
+                  }));
+                },
+                heroTag: 'Logout',
               ),
             ),
           )
