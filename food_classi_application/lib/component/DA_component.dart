@@ -783,7 +783,7 @@ class _addDiaryState extends State<addDiary> {
                                             MediaQuery.of(context).size.width *
                                                 0.01),
                                         child: Text(
-                                          foodName,
+                                          database[0]["FoodNameENG"].toString(),
                                           style: TextStyle(
                                               fontSize: MediaQuery.of(context)
                                                       .size
@@ -841,7 +841,8 @@ class _addDiaryState extends State<addDiary> {
                                                         .now(), //get today's date
                                                     firstDate: DateTime(
                                                         2000), //DateTime.now() - not to allow to choose before today.
-                                                    lastDate: DateTime(2101));
+                                                    lastDate: DateTime
+                                                        .now());
                                             if (pickedDate != null) {
                                               print(
                                                   pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
@@ -863,7 +864,8 @@ class _addDiaryState extends State<addDiary> {
                                           },
                                         ),
                                       ),
-                                      Text(
+                                      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                      child:Text(
                                         'Please select your meals type',
                                         style: TextStyle(
                                           fontSize: MediaQuery.of(context)
@@ -873,7 +875,7 @@ class _addDiaryState extends State<addDiary> {
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFFb9b9b9),
                                         ),
-                                      ),
+                                      ),),
                                       Padding(
                                         padding: EdgeInsets.all(
                                             MediaQuery.of(context).size.width *
@@ -949,9 +951,9 @@ class _addDiaryState extends State<addDiary> {
                                   MediaQuery.of(context).size.height * 0.03,
                                   MediaQuery.of(context).size.height * 0.4),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child:Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.25,
                                     height: MediaQuery.of(context).size.height *
@@ -985,7 +987,7 @@ class _addDiaryState extends State<addDiary> {
                                           meal),
                                       heroTag: null,
                                     ),
-                                  ),
+                                  ),),
                                 ],
                               ),
                             )

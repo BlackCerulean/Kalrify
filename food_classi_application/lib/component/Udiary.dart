@@ -126,6 +126,7 @@ class _UdiaryState extends State<Udiary> {
         "cal": cal.toString()
       },
     );
+    print(res);
     print(res.statusCode);
 
     if (res.statusCode == 200) {
