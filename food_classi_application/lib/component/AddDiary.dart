@@ -226,7 +226,8 @@ class _AddDiaryState extends State<AddDiary> {
                                                   .now(), //get today's date
                                               firstDate: DateTime(
                                                   2000), //DateTime.now() - not to allow to choose before today.
-                                              lastDate: DateTime(2101));
+                                              lastDate: DateTime
+                                                  .now());
                                       if (pickedDate != null) {
                                         print(
                                             pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
@@ -247,7 +248,8 @@ class _AddDiaryState extends State<AddDiary> {
                                     },
                                   ),
                                 ),
-                                Text(
+                                Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Text(
                                   'Please select your meals type',
                                   style: TextStyle(
                                     fontSize:
@@ -256,7 +258,7 @@ class _AddDiaryState extends State<AddDiary> {
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFFb9b9b9),
                                   ),
-                                ),
+                                ),),
                                 Padding(
                                   padding: EdgeInsets.all(
                                       MediaQuery.of(context).size.width * 0.05),
@@ -328,13 +330,15 @@ class _AddDiaryState extends State<AddDiary> {
                             MediaQuery.of(context).size.height * 0.03,
                             MediaQuery.of(context).size.height * 0.4),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child:Container(
                               width: MediaQuery.of(context).size.width * 0.25,
                               height: MediaQuery.of(context).size.height * 0.05,
                               child: FloatingActionButton(
-                                child: Text(
+                                child: Center(
+                                child:Text(
                                   'Save',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -342,7 +346,7 @@ class _AddDiaryState extends State<AddDiary> {
                                         MediaQuery.of(context).size.height *
                                             0.02,
                                   ),
-                                ),
+                                ),),
                                 backgroundColor: Color(0xFF8cb369),
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(
@@ -362,7 +366,7 @@ class _AddDiaryState extends State<AddDiary> {
                                     meal),
                                 heroTag: null,
                               ),
-                            ),
+                            ),),
                           ],
                         ),
                       )
