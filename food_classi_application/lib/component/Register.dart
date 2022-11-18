@@ -166,7 +166,7 @@ class _RegisScreenState extends State<RegisScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Height',
+          'Height (cm.)',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -202,7 +202,7 @@ class _RegisScreenState extends State<RegisScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Weight',
+          'Weight (kg.)',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
