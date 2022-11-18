@@ -167,20 +167,24 @@ class _DsearchState extends State<Dsearch> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
+                          showModalBottomSheet<dynamic>(
+                              isScrollControlled: true,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
                                     MediaQuery.of(context).size.width * 0.07),
                               ),
                               context: context,
-                              builder: (context) {
-                                return SingleChildScrollView(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        top: MediaQuery.of(context).size.width *
-                                            0.03),
+                              builder: (context) => Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6,
                                     child: Column(
                                       children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.015,
+                                        ),
                                         // Dish Name
                                         Center(
                                           child: Container(
@@ -194,21 +198,38 @@ class _DsearchState extends State<Dsearch> {
                                                         .size
                                                         .width *
                                                     0.02),
-                                            child: Center(
-                                              child: Text(
-                                                items[index]["FoodNameENG"] +
-                                                    "(" +
-                                                    items[index]["FoodNameTH"] +
-                                                    ")",
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        MediaQuery.of(context)
+                                            child: Column(
+                                              children: [
+                                                Center(
+                                                  child: Text(
+                                                    items[index]["FoodNameENG"],
+                                                    style: TextStyle(
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .width *
-                                                            0.05,
-                                                    color: Color.fromRGBO(
-                                                        228, 87, 46, 1)),
-                                              ),
+                                                            0.047,
+                                                        color: Color.fromRGBO(
+                                                            228, 87, 46, 1)),
+                                                  ),
+                                                ),
+                                                Center(
+                                                  child: Text(
+                                                    "(" +
+                                                        items[index]
+                                                            ["FoodNameTH"] +
+                                                        ")",
+                                                    style: TextStyle(
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.047,
+                                                        color: Color.fromRGBO(
+                                                            228, 87, 46, 1)),
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -420,12 +441,12 @@ class _DsearchState extends State<Dsearch> {
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02,
+                                                                    0.01,
                                                                 vertical: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02),
+                                                                    0.01),
                                                             child: Row(
                                                               children: [
                                                                 Text(
@@ -466,7 +487,7 @@ class _DsearchState extends State<Dsearch> {
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02,
+                                                                    0.01,
                                                                 vertical: 0),
                                                             child: Row(
                                                               children: [
@@ -513,12 +534,12 @@ class _DsearchState extends State<Dsearch> {
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02,
+                                                                    0.01,
                                                                 vertical: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02),
+                                                                    0.01),
                                                             child: Row(
                                                               children: [
                                                                 Text(
@@ -559,7 +580,7 @@ class _DsearchState extends State<Dsearch> {
                                                                             context)
                                                                         .size
                                                                         .width *
-                                                                    0.02,
+                                                                    0.01,
                                                                 vertical: 0),
                                                             child: Row(
                                                               children: [
@@ -607,12 +628,15 @@ class _DsearchState extends State<Dsearch> {
                                         Padding(
                                           padding: EdgeInsets.fromLTRB(
                                               0,
-                                              0,
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.02,
                                               0,
                                               MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.05),
+                                                  0.01),
                                           child: FloatingActionButton.extended(
                                             label: Text(
                                                 'Add to Diary'), // <-- Text
@@ -660,9 +684,7 @@ class _DsearchState extends State<Dsearch> {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                );
-                              });
+                                  ));
                         },
                         child: ListTile(
                           leading: CircleAvatar(

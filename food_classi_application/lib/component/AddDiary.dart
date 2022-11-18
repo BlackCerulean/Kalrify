@@ -123,13 +123,14 @@ class _AddDiaryState extends State<AddDiary> {
           tag: 'add-meal-diary',
           child: Container(
             width: MediaQuery.of(context).size.width * 0.85,
-            height: MediaQuery.of(context).size.height * 0.62,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: Material(
               // color: AppColors.accentColor,
               elevation: 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
               child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 child: Container(
                   child: Column(
                     children: [
@@ -226,8 +227,7 @@ class _AddDiaryState extends State<AddDiary> {
                                                   .now(), //get today's date
                                               firstDate: DateTime(
                                                   2000), //DateTime.now() - not to allow to choose before today.
-                                              lastDate: DateTime
-                                                  .now());
+                                              lastDate: DateTime.now());
                                       if (pickedDate != null) {
                                         print(
                                             pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
@@ -248,17 +248,19 @@ class _AddDiaryState extends State<AddDiary> {
                                     },
                                   ),
                                 ),
-                                Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                child: Text(
-                                  'Please select your meals type',
-                                  style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFFb9b9b9),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                  child: Text(
+                                    'Please select your meals type',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFb9b9b9),
+                                    ),
                                   ),
-                                ),),
+                                ),
                                 Padding(
                                   padding: EdgeInsets.all(
                                       MediaQuery.of(context).size.width * 0.05),
@@ -272,7 +274,7 @@ class _AddDiaryState extends State<AddDiary> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
+                                                0.5,
                                             child: RadioListTile(
                                                 title: Text("Breakfast"),
                                                 value: "Breakfast",
@@ -287,7 +289,7 @@ class _AddDiaryState extends State<AddDiary> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
+                                                0.5,
                                             child: RadioListTile(
                                                 title: Text("Lunch"),
                                                 value: "Lunch",
@@ -302,7 +304,7 @@ class _AddDiaryState extends State<AddDiary> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
+                                                0.5,
                                             child: RadioListTile(
                                                 title: Text("Dinner"),
                                                 value: "Dinner",
@@ -332,41 +334,45 @@ class _AddDiaryState extends State<AddDiary> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child:Container(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              height: MediaQuery.of(context).size.height * 0.05,
-                              child: FloatingActionButton(
-                                child: Center(
-                                child:Text(
-                                  'Save',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        MediaQuery.of(context).size.height *
-                                            0.02,
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05,
+                                child: FloatingActionButton(
+                                  child: Center(
+                                    child: Text(
+                                      'Save',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                    ),
                                   ),
-                                ),),
-                                backgroundColor: Color(0xFF8cb369),
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(
-                                      MediaQuery.of(context).size.height *
-                                          0.05),
+                                  backgroundColor: Color(0xFF8cb369),
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(
+                                        MediaQuery.of(context).size.height *
+                                            0.05),
+                                  ),
+                                  onPressed: () => addDiary(
+                                      cal,
+                                      engName,
+                                      thaiName,
+                                      fat,
+                                      carb,
+                                      protein,
+                                      sodium,
+                                      portion,
+                                      dateController.text,
+                                      meal),
+                                  heroTag: null,
                                 ),
-                                onPressed: () => addDiary(
-                                    cal,
-                                    engName,
-                                    thaiName,
-                                    fat,
-                                    carb,
-                                    protein,
-                                    sodium,
-                                    portion,
-                                    dateController.text,
-                                    meal),
-                                heroTag: null,
                               ),
-                            ),),
+                            ),
                           ],
                         ),
                       )

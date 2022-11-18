@@ -384,22 +384,31 @@ class _UdiaryState extends State<Udiary> {
                               List<int> temp_list = dataimageList;
                               return GestureDetector(
                                 onTap: () {
-                                  showModalBottomSheet(
+                                  showModalBottomSheet<dynamic>(
+                                      isScrollControlled: true,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(36.0),
+                                        borderRadius: BorderRadius.circular(
+                                            MediaQuery.of(context).size.width *
+                                                0.07),
                                       ),
                                       context: context,
                                       builder: (context) {
                                         return SingleChildScrollView(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.6,
                                             child: Column(
                                               children: [
+                                                SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.015,
+                                                ),
                                                 // Dish Name
                                                 Center(
                                                   child: Container(
@@ -409,33 +418,54 @@ class _UdiaryState extends State<Udiary> {
                                                                         context)
                                                                     .size
                                                                     .width *
-                                                                0.02,
+                                                                0.03,
                                                         vertical: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.01),
-                                                    child: Center(
-                                                      child: Text(
-                                                        dish_list[index][
-                                                                "FoodNameENG"] +
-                                                            "(" +
+                                                            0.02),
+                                                    child: Column(
+                                                      children: [
+                                                        Center(
+                                                          child: Text(
                                                             dish_list[index]
-                                                                ["FoodNameTH"] +
-                                                            ")",
-                                                        style: TextStyle(
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.047,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    228,
-                                                                    87,
-                                                                    46,
-                                                                    1)),
-                                                      ),
+                                                                ["FoodNameENG"],
+                                                            style: TextStyle(
+                                                                fontSize: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.047,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        228,
+                                                                        87,
+                                                                        46,
+                                                                        1)),
+                                                          ),
+                                                        ),
+                                                        Center(
+                                                          child: Text(
+                                                            "(" +
+                                                                dish_list[index]
+                                                                    [
+                                                                    "FoodNameTH"] +
+                                                                ")",
+                                                            style: TextStyle(
+                                                                fontSize: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.047,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        228,
+                                                                        87,
+                                                                        46,
+                                                                        1)),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
@@ -459,12 +489,12 @@ class _UdiaryState extends State<Udiary> {
                                                       MediaQuery.of(context)
                                                               .size
                                                               .width *
-                                                          0.02),
+                                                          0.03),
                                                   child: Container(
                                                       child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment
+                                                    //         .center,
                                                     children: [
                                                       Padding(
                                                         padding: EdgeInsets.symmetric(
@@ -563,7 +593,7 @@ class _UdiaryState extends State<Udiary> {
                                                                         context)
                                                                     .size
                                                                     .width *
-                                                                0.02),
+                                                                0.01),
                                                         child: Container(
                                                           child: Text(
                                                             "Nutritions",
@@ -632,10 +662,10 @@ class _UdiaryState extends State<Udiary> {
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
                                                                             MediaQuery.of(context).size.width *
-                                                                                0.02,
+                                                                                0.01,
                                                                         vertical:
                                                                             MediaQuery.of(context).size.width *
-                                                                                0.02),
+                                                                                0.01),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
@@ -689,10 +719,9 @@ class _UdiaryState extends State<Udiary> {
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
                                                                             MediaQuery.of(context).size.width *
-                                                                                0.02,
+                                                                                0.01,
                                                                         vertical:
-                                                                            MediaQuery.of(context).size.width *
-                                                                                0.02),
+                                                                            0),
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
@@ -730,22 +759,22 @@ class _UdiaryState extends State<Udiary> {
                                                                         context)
                                                                     .size
                                                                     .width *
-                                                                0.05),
+                                                                0.01),
                                                         child:
                                                             FloatingActionButton
                                                                 .extended(
                                                           label: Text(
-                                                              'Delete from Diary'), // <-- Text
+                                                              'Delete Diary'), // <-- Text
                                                           backgroundColor:
                                                               Colors.red,
                                                           icon: Icon(
                                                             // <-- Icon
-                                                            Icons.delete,
+                                                            Icons.note_alt,
                                                             size: MediaQuery.of(
                                                                         context)
                                                                     .size
                                                                     .width *
-                                                                0.051,
+                                                                0.06,
                                                           ),
                                                           onPressed: () => delDish(
                                                               item["id"],
