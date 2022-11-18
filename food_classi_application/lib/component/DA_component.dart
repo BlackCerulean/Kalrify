@@ -180,21 +180,22 @@ class _ViewmealState extends State<Viewmeal> {
       child: Hero(
           tag: 'view-meal-info',
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            height: MediaQuery.of(context).size.height * 0.62,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.67,
             child: Material(
               elevation: 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
                       MediaQuery.of(context).size.width * 0.06)),
               child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 child: database.isEmpty
                     ? Padding(
                         padding: EdgeInsets.all(
                             MediaQuery.of(context).size.width * 0.02),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: MediaQuery.of(context).size.height * 0.6,
+                          width: MediaQuery.of(context).size.width * 0.65,
+                          height: MediaQuery.of(context).size.height * 0.67,
                           child: Center(
                             child: Text(
                                 'Please tap an "Identify" button and wait for the result before using this feature',
@@ -217,32 +218,57 @@ class _ViewmealState extends State<Viewmeal> {
                           return Flexible(
                             child: Column(
                               children: <Widget>[
+                                // SizedBox(
+                                //   height:
+                                //       MediaQuery.of(context).size.height * 0.01,
+                                // ),
                                 // Dish Name
                                 Center(
                                   child: Container(
-                                    padding: EdgeInsets.all(
-                                        MediaQuery.of(context).size.width *
-                                            0.02),
-                                    child: Center(
-                                      child: Text(
-                                        database[0]["FoodNameENG"] +
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              0.01,
+                                      // vertical:
+                                      //     MediaQuery.of(context).size.width *
+                                      //         0.02
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            database[0]["FoodNameENG"],
+                                            style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.047,
+                                                color: Color.fromRGBO(
+                                                    228, 87, 46, 1)),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Text(
                                             "(" +
-                                            database[0]["FoodNameTH"] +
-                                            ")",
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.045,
-                                            color:
-                                                Color.fromRGBO(228, 87, 46, 1)),
-                                      ),
+                                                database[0]["FoodNameTH"] +
+                                                ")",
+                                            style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.047,
+                                                color: Color.fromRGBO(
+                                                    228, 87, 46, 1)),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),
                                 // // Dish Image
                                 Padding(
-                                  padding: EdgeInsets.all(0),
+                                  padding: EdgeInsets.all(
+                                      MediaQuery.of(context).size.width * 0.01),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
@@ -705,32 +731,35 @@ class _addDiaryState extends State<addDiary> {
                 tag: 'view-meal-info',
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.62,
+                    height: MediaQuery.of(context).size.height * 0.7,
                     child: Material(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.of(context).size.width * 0.06)),
                         child: SingleChildScrollView(
+                            physics: NeverScrollableScrollPhysics(),
                             child: Padding(
-                          padding: EdgeInsets.all(
-                              MediaQuery.of(context).size.width * 0.02),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: Center(
-                              child: Text(
-                                  'Please tap an "Identify" button and wait for the result before using this feature',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width * 0.02),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                child: Center(
+                                  child: Text(
+                                      'Please tap an "Identify" button and wait for the result before using this feature',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.045,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF8cb369))),
-                            ),
-                          ),
-                        ))))))
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF8cb369))),
+                                ),
+                              ),
+                            ))))))
         : AddDiary(
             token: token,
             cal: database[0]["Calories"].toString(),

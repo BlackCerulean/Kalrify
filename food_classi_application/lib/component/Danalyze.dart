@@ -98,7 +98,7 @@ class _DanalyzeState extends State<Danalyze> {
                         foodName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 25.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
                         ),
                       ),
                     ),
