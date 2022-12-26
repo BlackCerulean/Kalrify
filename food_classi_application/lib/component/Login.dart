@@ -8,8 +8,6 @@ import 'package:food_classi_application/homescreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:intl/number_symbols_data.dart';
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -18,24 +16,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/auth/login';
   TextEditingController username = TextEditingController();
-  TextEditingController password= TextEditingController();
-  
+  TextEditingController password = TextEditingController();
 
-  Future login() async{
-    var res = await http.post(Uri.parse(url), body: {
-      "username": username.text, "password": password.text
-    });
+  Future login() async {
+    var res = await http.post(Uri.parse(url),
+        body: {"username": username.text, "password": password.text});
     var resBody = json.decode(res.body);
-    
-    if(res.statusCode == 200){
-        String token = resBody['token'];
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
-        print(token);
-    } else{
+
+    if (res.statusCode == 200) {
+      String token = resBody['token'];
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
+      print(token);
+    } else {
       print('Error');
     }
-      return "Success!";
-    }
+    return "Success!";
+  }
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,9 +230,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-// class Token{
-//   final String value;
-
-//   const Token(this.value);
-// }

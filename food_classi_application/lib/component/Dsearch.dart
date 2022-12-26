@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_classi_application/component/Udiary.dart';
 import 'package:food_classi_application/component/AddDiary.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import '../decoration/hero_dialog_route.dart';
 import '../homescreen.dart';
@@ -65,7 +63,6 @@ class _DsearchState extends State<Dsearch> {
           dummyListData.add(database[i]);
         }
       }
-      // ;
       setState(() {
         items.clear();
         items.addAll(dummyListData);
@@ -257,8 +254,6 @@ class _DsearchState extends State<Dsearch> {
                                                   0.03),
                                           child: Container(
                                               child: Column(
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.center,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsets.symmetric(

@@ -1,11 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:food_classi_application/component/Danalyze.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:food_classi_application/component/Udiary.dart';
@@ -112,7 +108,6 @@ class _AddDiaryState extends State<AddDiary> {
     return "Success!";
   }
 
-  // bool isExecuted = false;
   @override
   Widget build(BuildContext context) {
     print(token);
@@ -125,7 +120,6 @@ class _AddDiaryState extends State<AddDiary> {
             width: MediaQuery.of(context).size.width * 0.85,
             height: MediaQuery.of(context).size.height * 0.7,
             child: Material(
-              // color: AppColors.accentColor,
               elevation: 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
@@ -153,7 +147,6 @@ class _AddDiaryState extends State<AddDiary> {
                         padding: EdgeInsets.all(
                             MediaQuery.of(context).size.width * 0.05),
                         child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

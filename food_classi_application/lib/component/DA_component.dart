@@ -1,20 +1,15 @@
-// import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'AddDiary.dart';
 import 'Danalyze.dart';
 import 'dart:typed_data';
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'Udiary.dart';
-
-// List database = [];
 
 class selectImage extends StatelessWidget {
   const selectImage({super.key, required this.token});
@@ -123,14 +118,12 @@ class selectImage extends StatelessWidget {
   void image_picker(int a, BuildContext context) async {
     XFile? _image;
     final ImagePicker _picker = ImagePicker();
-    // setState(() {});
     debugPrint("Image Picker Activated");
     if (a == 0) {
       _image = (await _picker.pickImage(
         source: ImageSource.camera,
         maxHeight: 512,
         maxWidth: 512,
-        // imageQuality: 80,
       ))!;
     } else {
       _image = (await _picker.pickImage(source: ImageSource.gallery))!;
@@ -143,9 +136,6 @@ class selectImage extends StatelessWidget {
         token: token,
       );
     }));
-    // debugPrint(_image.toString());
-    // upload(File(_image!.path));
-    // setState(() {});
   }
 }
 
@@ -156,22 +146,6 @@ class Viewmeal extends StatefulWidget {
 
 class _ViewmealState extends State<Viewmeal> {
   bool isExecuted = false;
-  // final String url = 'http://kalrify.sit.kmutt.ac.th:3000/analyze/getAnalyze';
-  // List database = [];
-
-  // Future<String> getDishInfo() async {
-  //   var res = await http.get(
-  //     Uri.parse(url),
-  //     headers: {"Accept": "application/json", "food": foodName.toString()},
-  //   );
-
-  //   setState(() {
-  //     var resBody = json.decode(res.body);
-  //     database = resBody["analyze"];
-  //   });
-
-  //   return "Success!";
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -218,10 +192,6 @@ class _ViewmealState extends State<Viewmeal> {
                           return Flexible(
                             child: Column(
                               children: <Widget>[
-                                // SizedBox(
-                                //   height:
-                                //       MediaQuery.of(context).size.height * 0.01,
-                                // ),
                                 // Dish Name
                                 Center(
                                   child: Container(
@@ -229,9 +199,6 @@ class _ViewmealState extends State<Viewmeal> {
                                       horizontal:
                                           MediaQuery.of(context).size.width *
                                               0.01,
-                                      // vertical:
-                                      //     MediaQuery.of(context).size.width *
-                                      //         0.02
                                     ),
                                     child: Column(
                                       children: [
@@ -265,7 +232,7 @@ class _ViewmealState extends State<Viewmeal> {
                                     ),
                                   ),
                                 ),
-                                // // Dish Image
+                                // Dish Image
                                 Padding(
                                   padding: EdgeInsets.all(
                                       MediaQuery.of(context).size.width * 0.01),
@@ -651,11 +618,6 @@ class _ViewmealState extends State<Viewmeal> {
           )),
     );
   }
-
-  // void initState() {
-  //   super.initState();
-  //   this.getDishInfo();
-  // }
 }
 
 // this class will hold the form data

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -47,7 +46,6 @@ class _UdiaryState extends State<Udiary> {
 
     setState(() {
       var resBody = json.decode(res.body);
-      // print(resBody);
       database = resBody["diary"];
       database = database.reversed.toList();
     });
@@ -86,7 +84,6 @@ class _UdiaryState extends State<Udiary> {
     print(json.decode(res.body));
 
     var resBody = json.decode(res.body);
-    // print(resBody);
     profileData = resBody["user"];
 
     return "Success!";
@@ -106,7 +103,6 @@ class _UdiaryState extends State<Udiary> {
     print(json.decode(res.body));
 
     var resBody = json.decode(res.body);
-    // print(resBody);
     totalcalData = resBody["diary"];
     eatCal = totalcalData[0]["totalCal"];
 
@@ -158,7 +154,6 @@ class _UdiaryState extends State<Udiary> {
     return "Success!";
   }
 
-  // bool _showData = false;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -340,8 +335,6 @@ class _UdiaryState extends State<Udiary> {
         child: ExpansionTile(
           textColor: Colors.white,
           collapsedTextColor: Colors.white,
-
-          // backgroundColor: Color.fromARGB(255, 255, 255, 255),
           title:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
@@ -366,8 +359,6 @@ class _UdiaryState extends State<Udiary> {
                 maxHeight: double.infinity,
               ),
               margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-              // padding:
-              //     EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
               child: ListTileTheme(
                 tileColor: Colors.white,
                 child: Container(
@@ -492,9 +483,6 @@ class _UdiaryState extends State<Udiary> {
                                                           0.03),
                                                   child: Container(
                                                       child: Column(
-                                                    // mainAxisAlignment:
-                                                    //     MainAxisAlignment
-                                                    //         .center,
                                                     children: [
                                                       Padding(
                                                         padding: EdgeInsets.symmetric(
@@ -869,6 +857,5 @@ class _UdiaryState extends State<Udiary> {
     super.initState();
     this.getDiaryData();
     dateController.text = "";
-    // this.getImage("");
   }
 }

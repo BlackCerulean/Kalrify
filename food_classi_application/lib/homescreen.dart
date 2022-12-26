@@ -317,7 +317,6 @@ class HomeScreen extends StatelessWidget {
   void image_picker(int a, BuildContext context) async {
     XFile? _image;
     final ImagePicker _picker = ImagePicker();
-    // setState(() {});
     debugPrint("Image Picker Activated");
     if (a == 0) {
       _image = (await _picker.pickImage(
@@ -337,8 +336,5 @@ class HomeScreen extends StatelessWidget {
         token: token,
       );
     }));
-    // debugPrint(_image.toString());
-    // upload(File(_image!.path));
-    // setState(() {});
   }
 }

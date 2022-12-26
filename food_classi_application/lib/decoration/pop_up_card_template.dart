@@ -69,7 +69,6 @@ class AddTodoPopupCard extends StatelessWidget {
             return CustomRectTween(begin: begin!, end: end!);
           },
           child: Material(
-            // color: AppColors.accentColor,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
@@ -102,10 +101,6 @@ class AddTodoPopupCard extends StatelessWidget {
                       color: Colors.white,
                       thickness: 0.2,
                     ),
-                    // FlatButton(
-                    //   onPressed: () {},
-                    //   child: const Text('Add'),
-                    // ),
                   ],
                 ),
               ),

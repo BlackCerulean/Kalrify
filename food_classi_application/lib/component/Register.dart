@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_classi_application/component/Login.dart';
 import 'package:food_classi_application/decoration/loginUtillities.dart';
-import 'package:food_classi_application/component/Login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,7 +13,6 @@ class RegisScreen extends StatefulWidget {
 String? _gender = '';
 final genderController = TextEditingController();
 
-
 class _RegisScreenState extends State<RegisScreen> {
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/auth/register';
   TextEditingController username = TextEditingController();
@@ -24,11 +22,11 @@ class _RegisScreenState extends State<RegisScreen> {
   TextEditingController weight = TextEditingController();
   TextEditingController age = TextEditingController();
 
-  void checkRadio(String value ) {
-      setState(() {
-        _gender = value;
-      });
-    }
+  void checkRadio(String value) {
+    setState(() {
+      _gender = value;
+    });
+  }
 
   Future regis() async {
     var res = await http.post(Uri.parse(url), body: {
@@ -269,41 +267,36 @@ class _RegisScreenState extends State<RegisScreen> {
     );
   }
 
-  Widget _buildRadionBtn(){
-    
+  Widget _buildRadionBtn() {
     return Container(
-      child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Gender',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        'Gender',
+        style: kLabelStyle,
+      ),
+      SizedBox(height: 10.0),
       RadioListTile(
-          title: Text("Male"),
-          value: 'male', 
-          groupValue: _gender, 
-          onChanged: (value){
-            setState(() {
-                checkRadio(value as String);
-            });
-          },
+        title: Text("Male"),
+        value: 'male',
+        groupValue: _gender,
+        onChanged: (value) {
+          setState(() {
+            checkRadio(value as String);
+          });
+        },
       ),
       RadioListTile(
-          title: Text("Female"),
-          value: 'female',
-          groupValue: _gender, 
-          onChanged: (value){
-            setState(() {
-                checkRadio(value as String);
-            });
-          },
+        title: Text("Female"),
+        value: 'female',
+        groupValue: _gender,
+        onChanged: (value) {
+          setState(() {
+            checkRadio(value as String);
+          });
+        },
       ),
-    ]
-    )
-  );
-}
+    ]));
+  }
 
   Widget _buildLoginBtn() {
     return Container(
@@ -332,7 +325,6 @@ class _RegisScreenState extends State<RegisScreen> {
       ),
     );
   }
-  
 
   Widget _buildSignupBtn() {
     return GestureDetector(
@@ -362,7 +354,6 @@ class _RegisScreenState extends State<RegisScreen> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

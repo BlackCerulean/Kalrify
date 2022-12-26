@@ -5,11 +5,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:tflite/tflite.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
-// import 'package:pytorch_mobile/pytorch_mobile.dart';
 
 String txt = "";
 String txt1 = "Upload or take an image of Thai Food";
@@ -24,20 +22,11 @@ class Dupload extends StatefulWidget {
 class _DuploadState extends State<Dupload> {
   _DuploadState({required this.token});
   final String token;
-  Map<String, dynamic>? _outputs;
   XFile? _image;
-  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
-    _loading = true;
-
-    // loadModel().then((value) {
-    //   setState(() {
-    //     _loading = false;
-    //   });
-    // });
   }
 
   @override
@@ -111,7 +100,7 @@ class _DuploadState extends State<Dupload> {
         new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    String base = "https://render-for-fastai.onrender.com";
+    String base = "https://kalrify-fastai-ml.onrender.com";
 
     var uri = Uri.parse(base + '/analyze');
 
@@ -128,7 +117,6 @@ class _DuploadState extends State<Dupload> {
       const end = '"}';
       final startIndex = value.indexOf(start);
       final endIndex = value.indexOf(end, startIndex + start.length);
-      // int l = value.length;
       txt = value.substring(startIndex + start.length, endIndex);
       setState(() {});
     });

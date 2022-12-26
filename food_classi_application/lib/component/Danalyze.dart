@@ -38,7 +38,6 @@ class _DanalyzeState extends State<Danalyze> {
   bool isLoading = false;
 
   final String url = 'http://kalrify.sit.kmutt.ac.th:3000/analyze/getAnalyze';
-  // List database = [];
 
   Future<String> getDishInfo() async {
     var res = await http.get(
@@ -168,7 +167,7 @@ class _DanalyzeState extends State<Danalyze> {
         new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    String base = "https://kalrify-ml-services.onrender.com";
+    String base = "https://kalrify-fastai-ml.onrender.com";
 
     var uri = Uri.parse(base + '/analyze');
 
@@ -193,6 +192,5 @@ class _DanalyzeState extends State<Danalyze> {
 
   void initState() {
     super.initState();
-    // this.getDishInfo();
   }
 }
